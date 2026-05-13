@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>きみ夏宵あそび | Night Fes</title>
+  <meta name="description" content="めあともえ presents「きみ夏宵あそび」Night Fes — 夏の宵を一緒に遊ぼう。">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/top.css">
+</head>
+<body>
+
+<!-- ── White-reveal overlay (active when coming from intro) ── -->
+<div id="page-reveal"></div>
+
+<!-- ── Navigation ── -->
+<nav id="navbar">
+  <a class="nav-logo" href="top.html">
+    <img src="assets/logo-dark.png" alt="きみ夏宵あそび">
+  </a>
+  <ul class="nav-links">
+    <li><a href="top.html">Home</a></li>
+    <li><a href="guests.html">Guests</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="rules.html">Rules</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HERO SECTION
+═══════════════════════════════════════════ -->
+<section id="hero">
+  <!-- Background Video -->
+  <div id="video-bg">
+    <video id="hero-video" autoplay muted loop playsinline>
+      <source src="assets/videos/bg-lantern.mov" type="video/quicktime">
+      <source src="assets/videos/bg-lantern.mov" type="video/mp4">
+    </video>
+    <div class="video-overlay"></div>
+  </div>
+
+
+  <!-- Hero content -->
+  <div id="hero-content">
+    <div id="hero-eyebrow">めあともえ presents</div>
+    <div id="hero-logo-wrap">
+      <img id="hero-logo" src="assets/logo-dark.png" alt="きみ夏宵あそび Night Fes">
+    </div>
+    <p id="hero-date">2024.8.9 fri — 8.11 sun | 13:00 → 25:00</p>
+    <p id="hero-tagline">夏の宵を、きみと一緒に遊ぼう。</p>
+    <div id="hero-ctas">
+      <a href="schedule.html" class="btn btn-primary">スケジュールを見る</a>
+      <a href="guests.html"   class="btn btn-outline">ゲストを見る</a>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div id="scroll-indicator">
+    <span>SCROLL</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     ABOUT SECTION
+═══════════════════════════════════════════ -->
+<section id="about">
+  <div class="section-title reveal">
+    <span class="en">About the Event</span>
+    <h2 class="ja">きみ夏宵あそびとは</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p>夏の夜——<br>花火が打ち上がり、縁日の賑わいが聞こえてくる、そんな特別な夜に<br>みんなで雀魂を囲む、3日間の夏祭り麻雀イベント。</p>
+      <p>参加者はリーダーペアやお祭り男・お祭り女と卓を囲み、<br>縁日ボーナスポイントを競い合います。</p>
+      <p>段位制限なし、対局数自由——<br>初心者も上級者も、自分のペースで楽しめる参加型フェスです。</p>
+    </div>
+    <div class="about-kv reveal">
+      <img src="assets/kv-festival.png" alt="縁日で射的">
+    </div>
+  </div>
+
+  <div class="about-stats reveal">
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-label">日間開催</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <span class="stat-num">12h</span>
+      <span class="stat-label">1日あたりの開催時間</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <span class="stat-num">∞</span>
+      <span class="stat-label">段位制限なし</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <span class="stat-num">自由</span>
+      <span class="stat-label">対局数・時間帯</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     KEY VISUAL GALLERY
+═══════════════════════════════════════════ -->
+<section id="gallery">
+  <div class="section-title reveal">
+    <span class="en">Key Visuals</span>
+    <h2 class="ja">チームキービジュアル</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="kv-grid">
+    <div class="kv-card reveal" style="--delay:0s">
+      <img src="assets/kv-beer.png" alt="れいめあビアガーデン">
+      <div class="kv-label">れいめあ ビアガーデン</div>
+    </div>
+    <div class="kv-card reveal" style="--delay:0.1s">
+      <img src="assets/kv-festival.png" alt="縁日で射的">
+      <div class="kv-label">縁日で射的</div>
+    </div>
+    <div class="kv-card reveal" style="--delay:0.2s">
+      <img src="assets/kv-fireworks.png" alt="爆裂夏花火">
+      <div class="kv-label">爆裂夏花火</div>
+    </div>
+    <div class="kv-card reveal" style="--delay:0.3s">
+      <img src="assets/kv-moon.png" alt="蒼星月花">
+      <div class="kv-label">蒼星月花</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     GUESTS PREVIEW
+═══════════════════════════════════════════ -->
+<section id="guests-preview">
+  <div class="section-title reveal">
+    <span class="en">Featured Guests</span>
+    <h2 class="ja">ゲスト紹介</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="guests-scroll-wrap">
+    <div class="guests-scroll" id="guests-scroll">
+
+      <!-- Leader Pair -->
+      <div class="guest-chip reveal" data-role="leader">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:270">杵</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag leader">リーダーペア</span>
+          <span class="guest-name">杵月のあ</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="leader">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:220">星</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag leader">リーダーペア</span>
+          <span class="guest-name">星影ラピス</span>
+        </div>
+      </div>
+
+      <!-- Matsuri Man -->
+      <div class="guest-chip reveal" data-role="matsuri-man">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:200">ゆ</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag matsuri-man">お祭り男</span>
+          <span class="guest-name">ゆうれいいか</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="matsuri-man">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:30">G</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag matsuri-man">お祭り男</span>
+          <span class="guest-name">G・ウザクさま</span>
+        </div>
+      </div>
+
+      <!-- Matsuri Woman -->
+      <div class="guest-chip reveal" data-role="matsuri-woman">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:340">ま</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag matsuri-woman">お祭り女</span>
+          <span class="guest-name">まにきゅあ</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="matsuri-woman">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:300">ひ</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag matsuri-woman">お祭り女</span>
+          <span class="guest-name">胡桃坂ひまり</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="matsuri-woman">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:130">ゆ</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag matsuri-woman">お祭り女</span>
+          <span class="guest-name">ゆんちゅる</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="matsuri-woman">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:190">聖</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag matsuri-woman">お祭り女</span>
+          <span class="guest-name">聖夜ノ雪</span>
+        </div>
+      </div>
+
+      <!-- Participants -->
+      <div class="guest-chip reveal" data-role="player">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:60">里</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag player">参加ゲスト</span>
+          <span class="guest-name">里野ぽん太</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="player">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:170">零</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag player">参加ゲスト</span>
+          <span class="guest-name">零空(zerosora)</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="player">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:350">大</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag player">参加ゲスト</span>
+          <span class="guest-name">大童レイナ</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="player">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:40">ド</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag player">参加ゲスト</span>
+          <span class="guest-name">ドラネコ</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="player">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:245">ま</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag player">参加ゲスト</span>
+          <span class="guest-name">まろちょふ</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="player">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:160">ひ</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag player">参加ゲスト</span>
+          <span class="guest-name">ひげくじら</span>
+        </div>
+      </div>
+      <div class="guest-chip reveal" data-role="player">
+        <div class="guest-chip-avatar placeholder-avatar" style="--hue:310">日</div>
+        <div class="guest-chip-info">
+          <span class="guest-role-tag player">参加ゲスト</span>
+          <span class="guest-name">日菜むい</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="reveal" style="text-align:center; margin-top: 48px;">
+    <a href="guests.html" class="btn btn-outline">全ゲストを見る →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     SCHEDULE PREVIEW
+═══════════════════════════════════════════ -->
+<section id="schedule-preview">
+  <div class="section-title reveal">
+    <span class="en">Event Schedule</span>
+    <h2 class="ja">開催スケジュール</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="schedule-days">
+    <div class="schedule-day-card glass-card reveal" style="--delay:0s">
+      <div class="day-header">
+        <span class="day-num">DAY 1</span>
+        <span class="day-date">8月9日（金）</span>
+      </div>
+      <div class="day-time">13:00 → 25:00</div>
+      <div class="day-note">開幕！全員全力で楽しもう</div>
+    </div>
+    <div class="schedule-day-card glass-card reveal" style="--delay:0.15s">
+      <div class="day-header">
+        <span class="day-num">DAY 2</span>
+        <span class="day-date">8月10日（土）</span>
+      </div>
+      <div class="day-time">13:00 → 25:00</div>
+      <div class="day-note">縁日ボーナス活用が鍵！</div>
+    </div>
+    <div class="schedule-day-card glass-card reveal" style="--delay:0.3s">
+      <div class="day-header">
+        <span class="day-num">DAY 3</span>
+        <span class="day-date">8月11日（日・祝）</span>
+      </div>
+      <div class="day-time">13:00 → 25:00</div>
+      <div class="day-note final">最終日 — トップ賞 +20pt!</div>
+    </div>
+  </div>
+
+  <div class="reveal" style="text-align:center; margin-top: 48px;">
+    <a href="schedule.html" class="btn btn-outline">詳細スケジュールを見る →</a>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CTA BANNER
+═══════════════════════════════════════════ -->
+<section id="cta-section">
+  <div class="cta-inner glass-card reveal">
+    <div class="cta-firework-icon">🎆</div>
+    <h2 class="cta-title">一緒に夏の宵を楽しもう</h2>
+    <p class="cta-sub">大会ID: 665418 でめあともえ企画にフォローを！<br>Discordサーバーでお祭り男・お祭り女一覧を確認しよう。</p>
+    <div class="cta-buttons">
+      <a href="rules.html" class="btn btn-primary">ルールを確認する</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <img src="assets/logo-dark.png" alt="きみ夏宵あそび" style="height:48px; margin-bottom:20px; opacity:0.7; filter: drop-shadow(0 0 6px rgba(155,114,207,0.4))">
+  <p>めあともえ presents「きみ夏宵あそび」Night Fes</p>
+  <p>© 2024 めあともえ企画 — このサイトはデザインモックです</p>
+</footer>
+
+<!-- ── Scripts ── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
