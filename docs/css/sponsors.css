@@ -1,0 +1,209 @@
+/* ═══════════════════════════════════════════
+   SPONSORS PAGE STYLES
+═══════════════════════════════════════════ */
+
+/* ヒーローのアイコン */
+.page-hero-icon {
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 12px;
+  filter: drop-shadow(0 0 12px rgba(240, 100, 100, 0.5));
+  animation: sponsorIconSpin 8s ease-in-out infinite;
+}
+@keyframes sponsorIconSpin {
+  0%, 100% { transform: rotate(-3deg) scale(1); }
+  50%      { transform: rotate(3deg) scale(1.06); }
+}
+
+/* ─ イントロセクション ─ */
+.sponsors-intro-section {
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+.sponsors-intro {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 80px;
+  text-align: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg,
+    rgba(240, 190, 80, 0.1) 0%,
+    rgba(224, 120, 152, 0.08) 100%);
+  border: 1px solid rgba(240, 190, 80, 0.3);
+}
+.intro-icon {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.85;
+  filter: drop-shadow(0 0 10px rgba(240, 190, 80, 0.4));
+  animation: introIconBob 3.5s ease-in-out infinite;
+}
+.intro-icon.left  { left: 20px; }
+.intro-icon.right { right: 20px; animation-delay: 1.2s; }
+@keyframes introIconBob {
+  0%, 100% { transform: translateY(-50%); }
+  50%      { transform: translateY(calc(-50% - 6px)); }
+}
+.sponsors-intro-text {
+  font-family: var(--font-ja);
+  font-size: 1rem;
+  line-height: 2;
+  color: rgba(255, 248, 240, 0.9);
+}
+
+/* ─ 賞品テーブル ─ */
+.sponsors-list-section {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+
+.sponsors-table-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8px;
+  overflow-x: auto;
+}
+
+.sponsors-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ja);
+  min-width: 720px;
+}
+
+.sponsors-table thead th {
+  padding: 18px 16px;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--c-white);
+  background: linear-gradient(135deg,
+    rgba(155, 114, 207, 0.35) 0%,
+    rgba(123, 78, 168, 0.25) 100%);
+  border-bottom: 2px solid rgba(155, 114, 207, 0.5);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(8px);
+}
+
+.sponsors-table thead th:first-child { border-top-left-radius: 12px; }
+.sponsors-table thead th:last-child  { border-top-right-radius: 12px; }
+
+.sponsors-table tbody td {
+  padding: 22px 16px;
+  font-size: 0.93rem;
+  border-bottom: 1px solid rgba(155, 114, 207, 0.15);
+  vertical-align: middle;
+  color: rgba(255, 248, 240, 0.85);
+  line-height: 1.6;
+}
+
+.sponsors-table tbody tr {
+  transition: background 0.25s ease;
+}
+.sponsors-table tbody tr:hover {
+  background: rgba(155, 114, 207, 0.08);
+}
+
+.col-award   { width: 26%; }
+.col-cond    { width: 28%; color: var(--c-dim) !important; font-size: 0.86rem !important; }
+.col-sponsor { width: 22%; }
+.col-prize   { width: 24%; }
+
+.award-name {
+  font-family: var(--font-ja);
+  font-weight: 600;
+  color: var(--c-white);
+  font-size: 1rem;
+  display: inline-block;
+  position: relative;
+  padding-left: 14px;
+}
+.award-name::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--c-gold);
+  box-shadow: 0 0 6px rgba(240, 190, 80, 0.6);
+}
+
+.prize-tag {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: var(--font-en);
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--c-gold);
+  background: rgba(240, 190, 80, 0.12);
+  border: 1px solid rgba(240, 190, 80, 0.4);
+  border-radius: 8px;
+  letter-spacing: 0.03em;
+}
+
+.placeholder-row td {
+  text-align: center;
+  color: var(--c-dim);
+  font-style: italic;
+  padding: 20px;
+}
+
+/* ─ 協賛募集セクション ─ */
+.sponsors-call-section {
+  padding: 40px 24px 80px;
+}
+.sponsors-call {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 40px;
+  text-align: center;
+  border-radius: 18px;
+  background: linear-gradient(135deg,
+    rgba(80, 140, 220, 0.08) 0%,
+    rgba(155, 114, 207, 0.08) 100%);
+  border: 1px solid rgba(155, 114, 207, 0.3);
+}
+.call-icon {
+  width: 56px;
+  height: 56px;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 0 10px rgba(155, 114, 207, 0.4));
+  animation: callIconSwing 2.5s ease-in-out infinite;
+}
+@keyframes callIconSwing {
+  0%, 100% { transform: rotate(-6deg); }
+  50%      { transform: rotate(6deg); }
+}
+.call-title {
+  font-family: var(--font-ja);
+  font-size: 1.4rem;
+  color: var(--c-white);
+  margin-bottom: 14px;
+}
+.call-desc {
+  color: var(--c-dim);
+  font-size: 0.95rem;
+  line-height: 1.9;
+  margin-bottom: 28px;
+}
+
+/* ─ レスポンシブ ─ */
+@media (max-width: 800px) {
+  .sponsors-intro { padding: 40px 24px; }
+  .intro-icon { display: none; }
+  .sponsors-intro-text { font-size: 0.92rem; }
+  .sponsors-table thead th { padding: 14px 12px; font-size: 0.78rem; }
+  .sponsors-table tbody td { padding: 18px 12px; font-size: 0.85rem; }
+  .award-name { font-size: 0.92rem; }
+  .prize-tag { font-size: 0.8rem; padding: 5px 10px; }
+}

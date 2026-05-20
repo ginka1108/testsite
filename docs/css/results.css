@@ -1,0 +1,250 @@
+/* ═══════════════════════════════════════════
+   RESULTS PAGE STYLES
+═══════════════════════════════════════════ */
+
+/* ヒーローのアイコン */
+.page-hero-icon {
+  display: block;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 12px;
+  filter: drop-shadow(0 0 12px rgba(240, 190, 80, 0.5));
+  animation: heroIconSway 4s ease-in-out infinite;
+}
+@keyframes heroIconSway {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(-4px) rotate(2deg); }
+}
+
+/* ─ 更新時刻バナー ─ */
+.update-section { padding-top: 40px; padding-bottom: 0; }
+.update-banner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 14px 24px;
+  border-radius: 12px;
+  background: rgba(80, 140, 220, 0.15);
+  border: 1px solid rgba(80, 140, 220, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.update-label {
+  font-family: var(--font-en);
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  color: #80C8F8;
+  padding: 3px 12px;
+  border: 1px solid rgba(80, 140, 220, 0.5);
+  border-radius: 999px;
+  background: rgba(80, 140, 220, 0.15);
+}
+.update-time {
+  font-family: var(--font-ja);
+  font-size: 0.9rem;
+  color: var(--c-white);
+  letter-spacing: 0.03em;
+}
+
+/* ─ タブ ─ */
+.results-nav-section { padding-top: 40px; padding-bottom: 20px; }
+.results-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  max-width: 800px;
+  margin: 0 auto;
+}
+.results-tab {
+  padding: 10px 22px;
+  font-family: var(--font-ja);
+  font-size: 0.9rem;
+  color: var(--c-dim);
+  background: rgba(3, 2, 14, 0.4);
+  border: 1px solid rgba(155, 114, 207, 0.25);
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.results-tab:hover {
+  color: var(--c-white);
+  border-color: rgba(155, 114, 207, 0.5);
+}
+.results-tab.active {
+  color: var(--c-white);
+  background: rgba(155, 114, 207, 0.25);
+  border-color: rgba(155, 114, 207, 0.7);
+  box-shadow: 0 0 16px rgba(155, 114, 207, 0.3);
+}
+
+/* ─ ペイン表示制御 ─ */
+.results-pane { display: none; }
+.results-pane.active { display: block; }
+
+/* ─ ランキング全体グリッド ─ */
+.ranking-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+@media (max-width: 1000px) {
+  .ranking-grid { grid-template-columns: 1fr; }
+}
+
+/* ─ ランキングブロック ─ */
+.ranking-block {
+  padding: 32px 28px;
+}
+.ranking-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(155, 114, 207, 0.25);
+}
+.ranking-icon {
+  width: 40px;
+  height: 40px;
+  filter: drop-shadow(0 0 8px rgba(240, 190, 80, 0.4));
+}
+.ranking-title {
+  font-family: var(--font-ja);
+  font-size: 1.4rem;
+  background: var(--grad-logo);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.team-header   { border-bottom-color: rgba(155, 114, 207, 0.35); }
+.personal-header { border-bottom-color: rgba(240, 190, 80, 0.35); }
+
+/* ─ ランキングテーブル ─ */
+.ranking-scroll {
+  max-height: 520px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(155, 114, 207, 0.4) transparent;
+}
+.ranking-scroll::-webkit-scrollbar { width: 6px; }
+.ranking-scroll::-webkit-scrollbar-thumb {
+  background: rgba(155, 114, 207, 0.4);
+  border-radius: 3px;
+}
+
+.ranking-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-ja);
+}
+.ranking-table thead th {
+  position: sticky;
+  top: 0;
+  background: rgba(14, 27, 90, 0.95);
+  padding: 12px 10px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  color: var(--c-dim);
+  text-align: left;
+  border-bottom: 1px solid rgba(155, 114, 207, 0.3);
+  z-index: 2;
+  backdrop-filter: blur(8px);
+}
+.ranking-table tbody td {
+  padding: 14px 10px;
+  font-size: 0.92rem;
+  border-bottom: 1px solid rgba(155, 114, 207, 0.1);
+  vertical-align: middle;
+}
+.ranking-table tbody tr {
+  transition: background 0.2s ease;
+}
+.ranking-table tbody tr:hover {
+  background: rgba(155, 114, 207, 0.06);
+}
+
+.col-rank { width: 64px; white-space: nowrap; }
+.col-pt   { text-align: right; font-family: var(--font-en); font-weight: 600; color: var(--c-gold); white-space: nowrap; }
+.col-sub  { text-align: right; font-family: var(--font-en); color: var(--c-dim); white-space: nowrap; }
+.col-team { font-size: 0.82rem; color: rgba(255, 248, 240, 0.7); }
+
+/* ─ 上位3位の装飾 ─ */
+.rank-medal {
+  display: inline-block;
+  font-family: var(--font-ja);
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  min-width: 44px;
+  text-align: center;
+}
+tr.rank-1 .rank-medal {
+  background: linear-gradient(135deg, #FFE08A, #F0BE50);
+  color: #1a1430;
+  box-shadow: 0 0 12px rgba(240, 190, 80, 0.6);
+}
+tr.rank-2 .rank-medal {
+  background: linear-gradient(135deg, #E0E0E8, #B0B0C0);
+  color: #1a1430;
+  box-shadow: 0 0 10px rgba(200, 200, 220, 0.4);
+}
+tr.rank-3 .rank-medal {
+  background: linear-gradient(135deg, #E8A878, #B87848);
+  color: #1a1430;
+  box-shadow: 0 0 10px rgba(200, 140, 100, 0.4);
+}
+tr.rank-1 .col-pt { color: #FFE08A; font-size: 1.05rem; }
+tr.rank-1 td { font-weight: 600; }
+
+/* もっと見る/サンプル行 */
+.more-row td, .more-cell {
+  text-align: center;
+  color: var(--c-dim);
+  font-size: 0.82rem;
+  font-style: italic;
+  padding: 18px;
+}
+
+/* ─ プレースホルダ ─ */
+.placeholder-block {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  text-align: center;
+}
+.placeholder-icon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 12px rgba(155, 114, 207, 0.3));
+}
+.placeholder-title {
+  font-family: var(--font-ja);
+  font-size: 1.5rem;
+  color: var(--c-white);
+  margin-bottom: 12px;
+}
+.placeholder-desc {
+  color: var(--c-dim);
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+/* ─ レスポンシブ ─ */
+@media (max-width: 700px) {
+  .ranking-block { padding: 24px 18px; }
+  .ranking-title { font-size: 1.2rem; }
+  .ranking-table tbody td { padding: 12px 6px; font-size: 0.85rem; }
+  .col-team { font-size: 0.72rem; }
+  .results-tab { padding: 8px 16px; font-size: 0.82rem; }
+  .update-time { font-size: 0.8rem; }
+}
