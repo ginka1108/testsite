@@ -33,7 +33,8 @@
   <!-- Background Video -->
   <div id="video-bg">
     <video id="hero-video" autoplay muted loop playsinline>
-      <source src="assets/videos/bg-lantern.mp4" type="video/mp4">
+      <source src="assets/videos/bg-lantern.mov" type="video/quicktime">
+      <source src="assets/videos/bg-lantern.mov" type="video/mp4">
     </video>
     <div class="video-overlay"></div>
   </div>
@@ -83,24 +84,80 @@
 
   <div class="about-stats reveal">
     <div class="stat-item">
-      <span class="stat-num">3</span>
-      <span class="stat-label">日間開催</span>
-    </div>
-    <div class="stat-sep"></div>
-    <div class="stat-item">
-      <span class="stat-num">12h</span>
-      <span class="stat-label">1日あたりの開催時間</span>
-    </div>
-    <div class="stat-sep"></div>
-    <div class="stat-item">
       <span class="stat-num">∞</span>
       <span class="stat-label">段位制限なし</span>
     </div>
     <div class="stat-sep"></div>
     <div class="stat-item">
       <span class="stat-num">自由</span>
-      <span class="stat-label">対局数・時間帯</span>
+      <span class="stat-label">打数ノルマ無し</span>
     </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <span class="stat-num">5900</span>
+      <span class="stat-label">持ち点</span>
+    </div>
+    <div class="stat-sep"></div>
+    <div class="stat-item">
+      <span class="stat-num">3000</span>
+      <span class="stat-label">本場</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     NEWS CAROUSEL (Fire TV風)
+═══════════════════════════════════════════ -->
+<section id="news-carousel-section">
+  <div class="section-title reveal">
+    <span class="en">News &amp; Topics</span>
+    <h2 class="ja">お知らせ</h2>
+    <div class="divider"></div>
+  </div>
+
+  <div class="news-carousel reveal" id="news-carousel">
+    <button class="nc-arrow nc-prev" aria-label="前へ">‹</button>
+    <div class="nc-stage">
+      <div class="nc-track" id="nc-track">
+        <article class="nc-card" data-idx="0">
+          <div class="nc-card-inner">
+            <span class="nc-badge">サンプル</span>
+            <h3 class="nc-title">サンプル</h3>
+            <p class="nc-desc">サンプルテキスト</p>
+          </div>
+        </article>
+        <article class="nc-card" data-idx="1">
+          <div class="nc-card-inner">
+            <span class="nc-badge">NEWS</span>
+            <h3 class="nc-title">駅前広告掲出中！</h3>
+            <p class="nc-desc">夏宵あそびの駅前広告が掲出中。詳細は後日公開予定。</p>
+          </div>
+        </article>
+        <article class="nc-card nc-active" data-idx="2">
+          <div class="nc-card-inner">
+            <span class="nc-badge">EVENT</span>
+            <h3 class="nc-title">リーダー参加イベント一覧</h3>
+            <p class="nc-desc">リーダーペアが参加する関連イベントをまとめてご紹介。</p>
+          </div>
+        </article>
+        <article class="nc-card" data-idx="3">
+          <div class="nc-card-inner">
+            <span class="nc-badge">GUIDE</span>
+            <h3 class="nc-title">世界一やさしい夏宵講座</h3>
+            <p class="nc-desc">初めての方向けに、夏宵あそびの遊び方をやさしく解説。</p>
+          </div>
+        </article>
+        <article class="nc-card" data-idx="4">
+          <div class="nc-card-inner">
+            <span class="nc-badge">サンプル</span>
+            <h3 class="nc-title">サンプル</h3>
+            <p class="nc-desc">サンプルテキスト</p>
+          </div>
+        </article>
+      </div>
+    </div>
+    <button class="nc-arrow nc-next" aria-label="次へ">›</button>
+    <div class="nc-dots" id="nc-dots"></div>
   </div>
 </section>
 
@@ -337,5 +394,71 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="js/main.js"></script>
+
+<!-- ── News Carousel ── -->
+<script>
+(function() {
+  const track = document.getElementById('nc-track');
+  if (!track) return;
+  const cards = Array.from(track.querySelectorAll('.nc-card'));
+  const total = cards.length;
+  const dotsWrap = document.getElementById('nc-dots');
+  const prevBtn = document.querySelector('.nc-prev');
+  const nextBtn = document.querySelector('.nc-next');
+
+  let current = cards.findIndex(c => c.classList.contains('nc-active'));
+  if (current < 0) current = Math.floor(total / 2);
+
+  // Build dots
+  for (let i = 0; i < total; i++) {
+    const dot = document.createElement('button');
+    dot.className = 'nc-dot';
+    dot.setAttribute('aria-label', `スライド ${i + 1}`);
+    dot.addEventListener('click', () => goTo(i));
+    dotsWrap.appendChild(dot);
+  }
+  const dots = Array.from(dotsWrap.children);
+
+  function update() {
+    cards.forEach((card, i) => {
+      const offset = i - current;
+      card.classList.remove('nc-active', 'nc-near', 'nc-far', 'nc-hidden');
+      card.style.setProperty('--offset', offset);
+      const abs = Math.abs(offset);
+      if (abs === 0)      card.classList.add('nc-active');
+      else if (abs === 1) card.classList.add('nc-near');
+      else if (abs === 2) card.classList.add('nc-far');
+      else                card.classList.add('nc-hidden');
+    });
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+  }
+
+  function goTo(idx) {
+    current = (idx + total) % total;
+    update();
+  }
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  prevBtn.addEventListener('click', prev);
+  nextBtn.addEventListener('click', next);
+
+  // Click on side card to bring to center
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => { if (i !== current) goTo(i); });
+  });
+
+  // Keyboard support
+  document.addEventListener('keydown', (e) => {
+    const rect = track.getBoundingClientRect();
+    const inView = rect.top < window.innerHeight && rect.bottom > 0;
+    if (!inView) return;
+    if (e.key === 'ArrowLeft')  prev();
+    if (e.key === 'ArrowRight') next();
+  });
+
+  update();
+})();
+</script>
 </body>
 </html>
