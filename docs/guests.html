@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ゲスト紹介 | きみ夏宵あそび</title>
-  <meta name="description" content="きみ夏宵あそびの参加ゲスト一覧。リーダーペア・お祭り男・お祭り女・一般参加者を紹介します。">
+  <meta name="description" content="きみ夏宵あそびの参加ゲスト一覧。主催・各チームのリーダーペア・お祭り男女・一般参加者を紹介します。">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/guests.css">
 </head>
@@ -37,25 +37,22 @@
 <main>
 
 <!-- HOSTS -->
-<section class="guest-section">
+<section class="guest-section host-section">
   <div class="section-title reveal">
-    <span class="en">Hosts</span>
+    <span class="en">Host</span>
     <h2 class="ja">主催</h2>
     <div class="divider"></div>
   </div>
-  <div class="host-cards">
-    <div class="host-card glass-card reveal">
-      <div class="host-avatar placeholder-avatar large" style="--hue:270">め</div>
-      <div class="host-name">めあ</div>
-      <div class="host-channel">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
-      </div>
+  <div class="host-feature glass-card reveal">
+    <div class="host-feature-visual">
+      <img src="assets/mare.png" alt="めあともえ" class="host-feature-img">
+      <div class="host-feature-glow"></div>
     </div>
-    <div class="host-card glass-card reveal">
-      <div class="host-avatar placeholder-avatar large" style="--hue:330">と</div>
-      <div class="host-name">ともえ</div>
-      <div class="host-channel">
+    <div class="host-feature-info">
+      <span class="host-feature-role">本イベント主催</span>
+      <h3 class="host-feature-name">めあともえ</h3>
+      <p class="host-feature-desc">夏の宵を一緒に遊ぼう。「きみ夏宵あそび」Night Fes を企画・主催。<br>麻雀と縁日のエッセンスを融合させた、3日間の夏祭りイベントへようこそ。</p>
+      <div class="host-feature-links">
         <a href="#" class="channel-link yt">▶ YouTube</a>
         <a href="#" class="channel-link tw">𝕏 Twitter</a>
       </div>
@@ -63,117 +60,251 @@
   </div>
 </section>
 
-<!-- LEADER PAIR -->
-<section class="guest-section alt-bg">
+<!-- TEAMS -->
+<section class="guest-section teams-section alt-bg">
   <div class="section-title reveal">
-    <span class="en">Leader Pair</span>
-    <h2 class="ja">リーダーペア</h2>
+    <span class="en">Teams</span>
+    <h2 class="ja">参加チーム</h2>
     <div class="divider"></div>
-    <p class="section-desc reveal">各チームのリーダー。同卓で勝てば縁日ボーナスチャンス！</p>
+    <p class="section-desc reveal">各チームにリーダーペアとお祭り男・お祭り女が所属しています。<br>同卓した相手より着順が上であれば縁日ボーナスを獲得！</p>
   </div>
-  <div class="guest-grid">
-    <div class="guest-card glass-card reveal">
-      <div class="role-badge leader">リーダーペア</div>
-      <div class="guest-avatar placeholder-avatar" style="--hue:270">杵</div>
-      <h3 class="guest-card-name">杵月のあ</h3>
-      <p class="guest-desc">麻雀と謎解きが大好き！お狐VTuber。定期的に参加型麻雀もしているので、遊びに来てくれたら嬉しいです♪一緒にお話しよ～♪</p>
-      <div class="guest-links">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
-      </div>
-    </div>
-    <div class="guest-card glass-card reveal">
-      <div class="role-badge leader">リーダーペア</div>
-      <div class="guest-avatar placeholder-avatar" style="--hue:220">星</div>
-      <h3 class="guest-card-name">星影ラピス</h3>
-      <p class="guest-desc">フォルトゥーナ！あなたに星明かりの導きを、個人占いVTuber星影ラピスです。</p>
-      <div class="guest-links">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- MATSURI MAN -->
-<section class="guest-section">
-  <div class="section-title reveal">
-    <span class="en">Festival Man</span>
-    <h2 class="ja">お祭り男</h2>
-    <div class="divider"></div>
-    <p class="section-desc reveal">同卓で勝てば着順差ボーナスpt獲得！</p>
-  </div>
-  <div class="guest-grid">
-    <div class="guest-card glass-card reveal">
-      <div class="role-badge matsuri-man">お祭り男</div>
-      <div class="guest-avatar placeholder-avatar" style="--hue:200">ゆ</div>
-      <h3 class="guest-card-name">ゆうれいいか</h3>
-      <p class="guest-desc">こんいか！ゆうれいいかと最高位戦日本プロ麻雀協会所属の管和馬です。麻雀本を作ったり麻雀打ったり麻雀打ったりしてます！麻雀楽しいね！！</p>
-      <div class="guest-links">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
-      </div>
+  <!-- Team: 爆裂夏花火 -->
+  <div class="team-frame reveal" style="--team-color: 240, 80, 100;">
+    <div class="team-frame-header">
+      <span class="team-mark"></span>
+      <h3 class="team-name">爆裂夏花火</h3>
     </div>
-    <div class="guest-card glass-card reveal">
-      <div class="role-badge matsuri-man">お祭り男</div>
-      <div class="guest-avatar placeholder-avatar" style="--hue:30">G</div>
-      <h3 class="guest-card-name">G・ウザクさま</h3>
-      <p class="guest-desc">ウザク本と呼ばれる麻雀本の著者が始めたチャンネルです。（※「ウザク式麻雀学習 牌効率」「麻雀 定石「何切る」301選」等、現在5冊）　もちろん麻雀中心、何切る中心の配信です。</p>
-      <div class="guest-links">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- MATSURI WOMAN -->
-<section class="guest-section alt-bg">
-  <div class="section-title reveal">
-    <span class="en">Festival Woman</span>
-    <h2 class="ja">お祭り女</h2>
-    <div class="divider"></div>
-    <p class="section-desc reveal">同卓で勝てば着順差ボーナスpt獲得！</p>
+    <div class="team-subsection">
+      <span class="team-role-label leader">リーダーペア</span>
+      <div class="team-members leader-pair">
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:0">西</div>
+          <div class="member-name">西乃うるり</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:340">遊</div>
+          <div class="member-name">遊楽天GOTH</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-subsection">
+      <span class="team-role-label matsuri">お祭り男・女</span>
+      <div class="team-members matsuri-group">
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:200">ゆ</div>
+          <div class="member-name">ゆうれいいか</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:340">ま</div>
+          <div class="member-name">まにきゅあ</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:300">ひ</div>
+          <div class="member-name">胡桃坂ひまり</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="guest-grid four-col">
-    <div class="guest-card glass-card reveal">
-      <div class="role-badge matsuri-woman">お祭り女</div>
-      <div class="guest-avatar placeholder-avatar" style="--hue:340">ま</div>
-      <h3 class="guest-card-name">まにきゅあ</h3>
-      <p class="guest-desc">お酒を愛して止まないお祭り女。バウンティーハンター。お酒を飲みながらの雑談配信、麻雀やFPS等のゲーム配信を行う。</p>
-      <div class="guest-links">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
+
+  <!-- Team: 蒼星月花 -->
+  <div class="team-frame reveal" style="--team-color: 80, 140, 220;">
+    <div class="team-frame-header">
+      <span class="team-mark"></span>
+      <h3 class="team-name">蒼星月花</h3>
+    </div>
+
+    <div class="team-subsection">
+      <span class="team-role-label leader">リーダーペア</span>
+      <div class="team-members leader-pair">
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:270">杵</div>
+          <div class="member-name">杵月のあ</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:220">星</div>
+          <div class="member-name">星影ラピス</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="guest-card glass-card reveal">
-      <div class="role-badge matsuri-woman">お祭り女</div>
-      <div class="guest-avatar placeholder-avatar" style="--hue:300">ひ</div>
-      <h3 class="guest-card-name">胡桃坂ひまり</h3>
-      <p class="guest-desc">あなたの心にひまりーち！どうも胡桃坂ひまりです！段位戦配信だったり三麻参加型配信、ゲーム配信・雑談・歌枠など、やりたいことをやりたいときに楽しくやらせていただいております🌸🌸🌸</p>
-      <div class="guest-links">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
+
+    <div class="team-subsection">
+      <span class="team-role-label matsuri">お祭り男・女</span>
+      <div class="team-members matsuri-group">
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:30">G</div>
+          <div class="member-name">ウザクさま</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:130">ゆ</div>
+          <div class="member-name">ゆんちゅる</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:190">聖</div>
+          <div class="member-name">聖夜ノ雪</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="guest-card glass-card reveal">
-      <div class="role-badge matsuri-woman">お祭り女</div>
-      <div class="guest-avatar placeholder-avatar" style="--hue:130">ゆ</div>
-      <h3 class="guest-card-name">ゆんちゅる</h3>
-      <p class="guest-desc">VPL5期生のゆんちゅるです！雀魂配信を主にしてます！麻雀一緒に楽しめたら嬉しいな！よろしくお願いします！！</p>
-      <div class="guest-links">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
+  </div>
+
+  <!-- Team: 縁日で射的！ -->
+  <div class="team-frame reveal" style="--team-color: 240, 190, 80;">
+    <div class="team-frame-header">
+      <span class="team-mark"></span>
+      <h3 class="team-name">縁日で射的！</h3>
+    </div>
+
+    <div class="team-subsection">
+      <span class="team-role-label leader">リーダーペア</span>
+      <div class="team-members leader-pair">
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:30">か</div>
+          <div class="member-name">かにみそ</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:50">細</div>
+          <div class="member-name">細谷拓真</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="guest-card glass-card reveal">
-      <div class="role-badge matsuri-woman">お祭り女</div>
-      <div class="guest-avatar placeholder-avatar" style="--hue:190">聖</div>
-      <h3 class="guest-card-name">聖夜ノ雪</h3>
-      <p class="guest-desc">寒ーい闇からおはようさんです！聖夜ノ雪と申します。ポケとツッコミが大好きな雪の精です。365日ずーっと雑談してます。</p>
-      <div class="guest-links">
-        <a href="#" class="channel-link yt">▶ YouTube</a>
-        <a href="#" class="channel-link tw">𝕏 Twitter</a>
+
+    <div class="team-subsection">
+      <span class="team-role-label matsuri">お祭り男・女</span>
+      <div class="team-members matsuri-group">
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:280">銀</div>
+          <div class="member-name">銀貨先生</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:20">泥</div>
+          <div class="member-name">泥目楽堕</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:170">東</div>
+          <div class="member-name">東雲ハヤテ</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Team: れいめあビアガーデン -->
+  <div class="team-frame reveal" style="--team-color: 120, 200, 140;">
+    <div class="team-frame-header">
+      <span class="team-mark"></span>
+      <h3 class="team-name">れいめあビアガーデン</h3>
+    </div>
+
+    <div class="team-subsection">
+      <span class="team-role-label leader">リーダーペア</span>
+      <div class="team-members leader-pair">
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:270">め</div>
+          <div class="member-name">めあともえ</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:330">夏</div>
+          <div class="member-name">夏八木玲衣</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="team-subsection">
+      <span class="team-role-label matsuri">お祭り男・女</span>
+      <div class="team-members matsuri-group">
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:240">メ</div>
+          <div class="member-name">メカZ</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:160">せ</div>
+          <div class="member-name">せどなりあん</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
+        <div class="team-member-card">
+          <div class="member-avatar placeholder-avatar" style="--hue:210">S</div>
+          <div class="member-name">Sals=noah</div>
+          <div class="member-links">
+            <a href="#" class="channel-link yt">▶</a>
+            <a href="#" class="channel-link tw">𝕏</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
