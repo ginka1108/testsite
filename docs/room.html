@@ -82,8 +82,9 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: min(70vw, 460px);
-      height: min(55vh, 420px);
+      /* 常に正円。横幅と高さの小さい方の70%を直径とする */
+      width: min(70vw, 70vh, 460px);
+      aspect-ratio: 1 / 1;
       border-radius: 50%;
       cursor: pointer;
       z-index: 5;
@@ -147,12 +148,12 @@
     /* タップヒント */
     .window-hint {
       position: absolute;
-      bottom: 18%;
+      bottom: 22%;
       left: 50%;
       transform: translateX(-50%);
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      letter-spacing: 0.4em;
+      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.2em;
       color: rgba(255, 255, 255, 0.9);
       text-shadow: 0 0 10px rgba(120, 200, 255, 0.9);
       pointer-events: none;
@@ -451,7 +452,7 @@
   <!-- 中央の水中窓 -->
   <div id="window-frame">
     <div class="window-preview" id="window-preview"></div>
-    <div class="window-hint">TAP TO DIVE</div>
+    <div class="window-hint">水中窓から写真を撮る</div>
   </div>
 
   <p class="room-caption">大きな水中窓から外を覗いてみよう<br>窓をタップするとカメラが起動します</p>
@@ -669,79 +670,154 @@
     flash.classList.add('flash');
 
     setTimeout(() => {
-      const w = cameraVideo.videoWidth;
-      const h = cameraVideo.videoHeight;
-      const off = document.createElement('canvas');
-      off.width = w; off.height = h;
-      const c = off.getContext('2d');
+      // ───────────────────────────────────────────
+      // 画面サイズと同じ比率・解像度で出力Canvasを作成
+      // (devicePixelRatio を考慮して高精細に)
+      // ───────────────────────────────────────────
+      const dpr = window.devicePixelRatio || 1;
+      const screenW = window.innerWidth;
+      const screenH = window.innerHeight;
+      const W = screenW * dpr;
+      const H = screenH * dpr;
 
-      // 1) 動画フレームを描画
-      c.drawImage(cameraVideo, 0, 0, w, h);
+      const out = document.createElement('canvas');
+      out.width = W;
+      out.height = H;
+      const c = out.getContext('2d');
 
-      // 2) フィルター効果を再現（青寄せ・コントラスト）
+      // ───────────────────────────────────────────
+      // 1) 黒背景
+      // ───────────────────────────────────────────
+      c.fillStyle = '#000';
+      c.fillRect(0, 0, W, H);
+
+      // ───────────────────────────────────────────
+      // 2) カメラ映像を object-fit: cover で描画
+      //    (画面の <video> と同じ表示サイズに調整)
+      // ───────────────────────────────────────────
+      const vw = cameraVideo.videoWidth;
+      const vh = cameraVideo.videoHeight;
+      const videoRatio  = vw / vh;
+      const screenRatio = W / H;
+      let sx, sy, sw, sh;
+      if (videoRatio > screenRatio) {
+        // 動画が横長→上下を全部使い、左右トリミング
+        sh = vh;
+        sw = vh * screenRatio;
+        sx = (vw - sw) / 2;
+        sy = 0;
+      } else {
+        // 動画が縦長→左右を全部使い、上下トリミング
+        sw = vw;
+        sh = vw / screenRatio;
+        sx = 0;
+        sy = (vh - sh) / 2;
+      }
+
+      // 画面の <video> には filter: hue-rotate(180deg) saturate(1.4) contrast(1.05) brightness(0.85) が適用されている
+      // Canvas でも同じフィルタを適用
+      c.filter = 'hue-rotate(180deg) saturate(1.4) contrast(1.05) brightness(0.85)';
+      c.drawImage(cameraVideo, sx, sy, sw, sh, 0, 0, W, H);
+      c.filter = 'none';
+
+      // ───────────────────────────────────────────
+      // 3) 青tint レイヤー (mix-blend-mode: multiply 相当)
+      // ───────────────────────────────────────────
       c.globalCompositeOperation = 'multiply';
-      const grdTint = c.createLinearGradient(0, 0, 0, h);
-      grdTint.addColorStop(0,   'rgba(60, 140, 220, 0.35)');
-      grdTint.addColorStop(0.6, 'rgba(30, 80, 160, 0.45)');
-      grdTint.addColorStop(1,   'rgba(10, 30, 80, 0.65)');
-      c.fillStyle = grdTint;
-      c.fillRect(0, 0, w, h);
+      // 上部の薄い水色グロー
+      const grdGlow = c.createRadialGradient(W/2, H*0.3, 0, W/2, H*0.3, Math.max(W, H) * 0.6);
+      grdGlow.addColorStop(0,   'rgba(120, 200, 255, 0.15)');
+      grdGlow.addColorStop(0.6, 'rgba(120, 200, 255, 0)');
+      grdGlow.addColorStop(1,   'rgba(120, 200, 255, 0)');
+      // ベースの青→深い青グラデ
+      const grdBlue = c.createLinearGradient(0, 0, 0, H);
+      grdBlue.addColorStop(0,   'rgba(40, 120, 200, 0.2)');
+      grdBlue.addColorStop(0.6, 'rgba(20, 60, 140, 0.35)');
+      grdBlue.addColorStop(1,   'rgba(10, 30, 80, 0.55)');
+      c.fillStyle = grdBlue;
+      c.fillRect(0, 0, W, H);
+      c.fillStyle = grdGlow;
+      c.fillRect(0, 0, W, H);
 
-      // 3) 中央上に明るい部分（光が差し込む感）
+      // ───────────────────────────────────────────
+      // 4) コースティクス (光の差し込み・screen合成)
+      //    画面で動いている斜めの光線をスナップショット
+      // ───────────────────────────────────────────
       c.globalCompositeOperation = 'screen';
-      const grdLight = c.createRadialGradient(w/2, h*0.25, 0, w/2, h*0.25, w*0.6);
-      grdLight.addColorStop(0,   'rgba(180, 230, 255, 0.4)');
-      grdLight.addColorStop(0.5, 'rgba(120, 200, 255, 0.15)');
-      grdLight.addColorStop(1,   'rgba(0, 0, 0, 0)');
-      c.fillStyle = grdLight;
-      c.fillRect(0, 0, w, h);
+      c.save();
+      // 斜め115度のストライプ
+      const stripeSpacing = 120 * dpr;
+      const stripeWidth = 30 * dpr;
+      c.translate(W/2, H/2);
+      c.rotate((115 - 90) * Math.PI / 180); // 115deg軸 → x方向に斜め
+      const diag = Math.hypot(W, H);
+      // 現在のCSSアニメーション位置（時間ベース）に近い位置に光線を配置
+      const t = (performance.now() / 8000) % 1;
+      const offset = -t * stripeSpacing;
+      for (let x = -diag; x < diag; x += stripeSpacing) {
+        const grdStripe = c.createLinearGradient(x + offset, 0, x + offset + stripeWidth, 0);
+        grdStripe.addColorStop(0,   'rgba(180, 220, 255, 0)');
+        grdStripe.addColorStop(0.5, 'rgba(180, 220, 255, 0.08)');
+        grdStripe.addColorStop(1,   'rgba(180, 220, 255, 0)');
+        c.fillStyle = grdStripe;
+        c.fillRect(x + offset, -diag, stripeWidth, diag * 2);
+      }
+      c.restore();
 
-      // 4) ビネット
-      c.globalCompositeOperation = 'multiply';
-      const grdVig = c.createRadialGradient(w/2, h/2, 0, w/2, h/2, Math.max(w, h) * 0.7);
-      grdVig.addColorStop(0,   'rgba(255, 255, 255, 1)');
-      grdVig.addColorStop(0.6, 'rgba(180, 200, 230, 1)');
-      grdVig.addColorStop(1,   'rgba(10, 30, 80, 1)');
-      c.fillStyle = grdVig;
-      c.fillRect(0, 0, w, h);
-
-      // 5) 円形マスク（水中窓型）
-      c.globalCompositeOperation = 'destination-in';
-      const grdMask = c.createRadialGradient(w/2, h/2, 0, w/2, h/2, Math.min(w, h) * 0.48);
-      grdMask.addColorStop(0,    'rgba(0,0,0,1)');
-      grdMask.addColorStop(0.85, 'rgba(0,0,0,1)');
-      grdMask.addColorStop(1,    'rgba(0,0,0,0)');
-      c.fillStyle = grdMask;
-      c.fillRect(0, 0, w, h);
-
-      // 6) 黒背景に重ねる
-      const final = document.createElement('canvas');
-      final.width = w; final.height = h;
-      const fc = final.getContext('2d');
-      fc.fillStyle = '#050818';
-      fc.fillRect(0, 0, w, h);
-      fc.drawImage(off, 0, 0);
-
-      // 7) 気泡を描画 (画面の気泡を写真にも反映)
-      fc.save();
+      // ───────────────────────────────────────────
+      // 5) 気泡を描画 (画面上の気泡をそのまま再現)
+      // ───────────────────────────────────────────
+      c.globalCompositeOperation = 'source-over';
       bubbles.forEach(b => {
-        const sx = b.x / window.innerWidth  * w;
-        const sy = b.y / window.innerHeight * h;
-        const sr = b.r * (w / window.innerWidth) * 1.2;
-        if (sx < 0 || sx > w || sy < 0 || sy > h) return;
-        const grd = fc.createRadialGradient(sx - sr*0.3, sy - sr*0.3, 0, sx, sy, sr);
-        grd.addColorStop(0,   'rgba(255,255,255,0.9)');
-        grd.addColorStop(0.4, 'rgba(200,230,255,0.4)');
+        const sxB = b.x * dpr;
+        const syB = b.y * dpr;
+        const srB = b.r * dpr;
+        if (sxB < -srB || sxB > W + srB || syB < -srB || syB > H + srB) return;
+        c.save();
+        c.globalAlpha = b.opacity;
+        const grd = c.createRadialGradient(
+          sxB - srB*0.3, syB - srB*0.3, 0,
+          sxB, syB, srB
+        );
+        grd.addColorStop(0,   'rgba(255,255,255,0.95)');
+        grd.addColorStop(0.4, 'rgba(200,230,255,0.5)');
         grd.addColorStop(1,   'rgba(150,200,240,0.05)');
-        fc.globalAlpha = b.opacity;
-        fc.fillStyle = grd;
-        fc.beginPath();
-        fc.arc(sx, sy, sr, 0, Math.PI * 2);
-        fc.fill();
+        c.fillStyle = grd;
+        c.beginPath();
+        c.arc(sxB, syB, srB, 0, Math.PI * 2);
+        c.fill();
+        // ハイライト
+        c.fillStyle = 'rgba(255,255,255,0.7)';
+        c.beginPath();
+        c.arc(sxB - srB*0.3, syB - srB*0.4, srB*0.25, 0, Math.PI * 2);
+        c.fill();
+        c.restore();
       });
-      fc.restore();
 
-      const dataUrl = final.toDataURL('image/png');
+      // ───────────────────────────────────────────
+      // 6) ビネット (端を暗く)
+      // ───────────────────────────────────────────
+      const grdVig = c.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.hypot(W, H) * 0.55);
+      grdVig.addColorStop(0,   'rgba(0, 0, 0, 0)');
+      grdVig.addColorStop(0.5, 'rgba(0, 0, 0, 0)');
+      grdVig.addColorStop(0.8, 'rgba(0, 10, 40, 0.4)');
+      grdVig.addColorStop(1,   'rgba(0, 5, 20, 0.8)');
+      c.fillStyle = grdVig;
+      c.fillRect(0, 0, W, H);
+
+      // ───────────────────────────────────────────
+      // 7) 窓マスク (中央透明→端は黒い丸窓型)
+      // ───────────────────────────────────────────
+      const grdMask = c.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.hypot(W, H) * 0.5);
+      grdMask.addColorStop(0,    'rgba(0, 5, 20, 0)');
+      grdMask.addColorStop(0.45, 'rgba(0, 5, 20, 0)');
+      grdMask.addColorStop(0.7,  'rgba(0, 5, 20, 0.6)');
+      grdMask.addColorStop(1,    'rgba(0, 5, 20, 0.95)');
+      c.fillStyle = grdMask;
+      c.fillRect(0, 0, W, H);
+
+      // 完成画像を出力
+      const dataUrl = out.toDataURL('image/png');
       photoPreview.src = dataUrl;
       photoDownload.href = dataUrl;
       photoResult.classList.add('active');
