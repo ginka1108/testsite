@@ -77,13 +77,91 @@
     /* ═══════════════════════════════════════════
        UNDERWATER WINDOW (中央の水中窓)
     ═══════════════════════════════════════════ */
-    #window-frame {
+    /* ═══════════════════════════════════════════
+       ROOM CHOICES (2つの導線)
+    ═══════════════════════════════════════════ */
+    .room-choices {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      /* 常に正円。横幅と高さの小さい方の70%を直径とする */
-      width: min(70vw, 70vh, 460px);
+      display: flex;
+      gap: clamp(20px, 6vw, 80px);
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      padding: 0 24px;
+      z-index: 5;
+    }
+    .room-choice {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      cursor: pointer;
+    }
+    .choice-label {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .choice-en {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      color: rgba(240, 190, 80, 0.7);
+    }
+    .choice-ja {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      color: rgba(255, 248, 240, 0.9);
+      text-shadow: 0 0 12px rgba(155, 114, 207, 0.5);
+    }
+
+    /* フォトパネルの見た目（立ち絵入り青フレーム） */
+    .photo-panel-visual {
+      width: min(40vw, 40vh, 240px);
+      aspect-ratio: 3 / 4;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      transition: transform 0.4s ease;
+    }
+    .room-choice:hover .photo-panel-visual { transform: translateY(-6px); }
+    .panel-frame-deco {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      background: linear-gradient(160deg,
+        rgba(60, 120, 200, 0.3) 0%,
+        rgba(30, 70, 150, 0.25) 100%);
+      border: 3px solid rgba(120, 180, 240, 0.6);
+      box-shadow:
+        0 0 30px rgba(80, 140, 220, 0.4),
+        inset 0 0 40px rgba(40, 100, 180, 0.3);
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .panel-preview-img {
+      max-width: 90%;
+      max-height: 95%;
+      object-fit: contain;
+      filter: drop-shadow(0 4px 12px rgba(0, 30, 80, 0.5));
+    }
+
+    /* 水中窓を2導線サイズに調整 */
+    #window-frame {
+      position: relative;
+      top: auto;
+      left: auto;
+      transform: none;
+      width: min(40vw, 40vh, 240px);
       aspect-ratio: 1 / 1;
       border-radius: 50%;
       cursor: pointer;
@@ -147,19 +225,7 @@
 
     /* タップヒント */
     .window-hint {
-      position: absolute;
-      bottom: 22%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-family: 'Noto Serif JP', 'Hiragino Mincho ProN', serif;
-      font-size: 0.95rem;
-      letter-spacing: 0.2em;
-      color: rgba(255, 255, 255, 0.9);
-      text-shadow: 0 0 10px rgba(120, 200, 255, 0.9);
-      pointer-events: none;
-      animation: hintPulse 2.5s ease-in-out infinite;
-      z-index: 6;
-      white-space: nowrap;
+      display: none; /* 2導線では下のラベルに統合 */
     }
     @keyframes hintPulse {
       0%, 100% { opacity: 0.6; }
@@ -434,6 +500,193 @@
     }
 
     /* エラー表示 */
+    /* ═══════════════════════════════════════════
+       PHOTO BOOTH VIEW
+    ═══════════════════════════════════════════ */
+    #booth-view {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 100;
+      display: none;
+      overflow: hidden;
+    }
+    #booth-view.active { display: block; }
+
+    #booth-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      /* 通常カメラ：歪み・色補正なし */
+    }
+
+    #booth-bubble-canvas {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* 青基調フレーム装飾 */
+    #booth-frame {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 8;
+      border: 14px solid transparent;
+      border-image: linear-gradient(135deg,
+        #4aa0e8 0%,
+        #2a6cc0 25%,
+        #5ec8f0 50%,
+        #2a6cc0 75%,
+        #4aa0e8 100%) 1;
+      box-shadow:
+        inset 0 0 60px rgba(40, 100, 180, 0.5),
+        inset 0 0 120px rgba(20, 60, 140, 0.3);
+    }
+    /* フレーム四隅の装飾 */
+    #booth-frame::before,
+    #booth-frame::after {
+      content: '';
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border: 3px solid rgba(150, 210, 255, 0.8);
+    }
+    #booth-frame::before {
+      top: 8px; left: 8px;
+      border-right: none; border-bottom: none;
+      border-radius: 12px 0 0 0;
+    }
+    #booth-frame::after {
+      bottom: 8px; right: 8px;
+      border-left: none; border-top: none;
+      border-radius: 0 0 12px 0;
+    }
+
+    /* 立ち絵 */
+    #booth-character {
+      position: absolute;
+      bottom: 0;
+      right: 4%;
+      height: 55%;
+      max-height: 60vh;
+      z-index: 7;
+      cursor: grab;
+      touch-action: none;
+      filter: drop-shadow(0 4px 16px rgba(0, 20, 60, 0.6));
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    #booth-character:active { cursor: grabbing; }
+
+    /* スタンプレイヤー */
+    #booth-stamp-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 9;
+      pointer-events: none;
+    }
+    .placed-stamp {
+      position: absolute;
+      pointer-events: auto;
+      cursor: grab;
+      touch-action: none;
+      user-select: none;
+      transform: translate(-50%, -50%);
+      font-size: 3rem;
+      line-height: 1;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+    }
+    .placed-stamp:active { cursor: grabbing; }
+    .placed-stamp img {
+      width: 64px;
+      height: 64px;
+      pointer-events: none;
+    }
+
+    /* スタンプパレット */
+    #stamp-palette {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      z-index: 20;
+    }
+    .stamp-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(20, 40, 80, 0.85);
+      border: 1px solid rgba(150, 210, 255, 0.6);
+      font-size: 1.5rem;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+    .stamp-toggle:hover { transform: scale(1.1); background: rgba(40, 80, 160, 0.9); }
+    .stamp-options {
+      position: absolute;
+      top: 62px;
+      right: 0;
+      display: none;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      padding: 14px;
+      background: rgba(15, 30, 60, 0.95);
+      border: 1px solid rgba(150, 210, 255, 0.4);
+      border-radius: 14px;
+      backdrop-filter: blur(12px);
+      width: 150px;
+    }
+    .stamp-options.open { display: grid; }
+    .stamp-pick {
+      width: 56px;
+      height: 56px;
+      border-radius: 10px;
+      background: rgba(40, 70, 130, 0.5);
+      border: 1px solid rgba(150, 210, 255, 0.25);
+      font-size: 1.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s ease, transform 0.2s ease;
+      padding: 0;
+    }
+    .stamp-pick:hover { background: rgba(80, 140, 220, 0.6); transform: scale(1.08); }
+    .stamp-pick img { width: 36px; height: 36px; }
+
+    #booth-flash {
+      position: absolute;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 30;
+    }
+    #booth-flash.flash { animation: flashAnim 0.4s ease-out; }
+
+    #stamp-hint {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(0, 0, 0, 0.4);
+      padding: 6px 16px;
+      border-radius: 999px;
+      z-index: 20;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    /* ═══════════════════════════════════════════
+       CAMERA ERROR (共通)
+    ═══════════════════════════════════════════ */
     #camera-error {
       position: fixed;
       inset: 0;
@@ -490,13 +743,80 @@
     <span class="ja">めあともえの部屋</span>
   </div>
 
-  <!-- 中央の水中窓 -->
-  <div id="window-frame">
-    <div class="window-preview" id="window-preview"></div>
-    <div class="window-hint">水中窓から写真を撮る</div>
+  <div class="room-choices">
+    <!-- 左: フォトパネル -->
+    <div id="photo-panel-entry" class="room-choice">
+      <div class="choice-visual photo-panel-visual">
+        <div class="panel-frame-deco">
+          <img src="assets/mare.png" alt="めあともえ" class="panel-preview-img">
+        </div>
+      </div>
+      <div class="choice-label">
+        <span class="choice-en">PHOTO BOOTH</span>
+        <span class="choice-ja">フォトパネルを起動</span>
+      </div>
+    </div>
+
+    <!-- 右: 水中窓 -->
+    <div class="room-choice window-choice">
+      <div id="window-frame">
+        <div class="window-preview" id="window-preview"></div>
+        <div class="window-hint">水中窓から写真を撮る</div>
+      </div>
+      <div class="choice-label">
+        <span class="choice-en">UNDERWATER</span>
+        <span class="choice-ja">水中窓から写真を撮る</span>
+      </div>
+    </div>
   </div>
 
-  <p class="room-caption">大きな水中窓から外を覗いてみよう<br>窓をタップするとカメラが起動します</p>
+  <p class="room-caption">2つのカメラから選んで、夏宵の思い出を残そう</p>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PHOTO BOOTH VIEW (通常カメラ + 立ち絵合成)
+═══════════════════════════════════════════ -->
+<div id="booth-view">
+  <video id="booth-video" autoplay playsinline muted></video>
+  <canvas id="booth-bubble-canvas"></canvas>
+
+  <!-- 青基調フレーム装飾 -->
+  <div id="booth-frame"></div>
+
+  <!-- 立ち絵（ドラッグ可能） -->
+  <img src="assets/mare.png" alt="めあともえ" id="booth-character" draggable="false">
+
+  <!-- スタンプレイヤー（押したスタンプがここに乗る） -->
+  <div id="booth-stamp-layer"></div>
+
+  <div id="booth-flash"></div>
+
+  <!-- スタンプ選択パレット -->
+  <div id="stamp-palette">
+    <button class="stamp-toggle" id="stamp-toggle" aria-label="スタンプ">🏮</button>
+    <div class="stamp-options" id="stamp-options">
+      <button class="stamp-pick" data-type="emoji" data-val="🎆">🎆</button>
+      <button class="stamp-pick" data-type="emoji" data-val="🏮">🏮</button>
+      <button class="stamp-pick" data-type="emoji" data-val="🐟">🐟</button>
+      <button class="stamp-pick" data-type="emoji" data-val="🫧">🫧</button>
+      <button class="stamp-pick" data-type="emoji" data-val="🎐">🎐</button>
+      <button class="stamp-pick" data-type="emoji" data-val="⭐">⭐</button>
+      <button class="stamp-pick" data-type="img" data-val="assets/chouchin.png"><img src="assets/chouchin.png" alt="提灯"></button>
+      <button class="stamp-pick" data-type="img" data-val="assets/uchiwa.png"><img src="assets/uchiwa.png" alt="うちわ"></button>
+      <button class="stamp-pick" data-type="img" data-val="assets/fuurin.png"><img src="assets/fuurin.png" alt="風鈴"></button>
+      <button class="stamp-pick" data-type="img" data-val="assets/kasa.png"><img src="assets/kasa.png" alt="傘"></button>
+    </div>
+  </div>
+
+  <!-- UI -->
+  <div class="camera-ui">
+    <button class="ui-btn" id="booth-close" aria-label="閉じる">✕</button>
+    <button class="ui-btn shutter-btn" id="booth-shutter" aria-label="撮影"></button>
+    <button class="ui-btn" id="booth-switch" aria-label="カメラ切替">⟲</button>
+  </div>
+
+  <!-- スタンプ削除ヒント -->
+  <div id="stamp-hint">スタンプ／立ち絵はドラッグで移動・ダブルタップで削除</div>
 </div>
 
 <!-- ═══════════════════════════════════════════
@@ -833,8 +1153,8 @@
       // ステップ2: 歪み処理 (feDisplacementMap 相当)
       // ───────────────────────────────────────────
       // 元のSVG: baseFrequency="0.012 0.025" → 水平より垂直方向の周波数が高い
-      // scale="14" を画面解像度に合わせて(歪みは控えめに7)
-      const distortScale = 7 * dpr;
+      // 歪みは控えめに（ユーザー調整により0.2）
+      const distortScale = 0.2 * dpr;
       // 周波数 → scaleの逆数 (baseFrequency=0.012 は周期約83px相当)
       const baseFreqX = 0.012;
       const baseFreqY = 0.025;
@@ -1009,6 +1329,292 @@
     cameraView.classList.remove('active');
     stopBubbles();
   }
+
+  // ═══════════════════════════════════════════
+  // 6. PHOTO BOOTH (通常カメラ + 立ち絵 + スタンプ)
+  // ═══════════════════════════════════════════
+  const boothView   = document.getElementById('booth-view');
+  const boothVideo  = document.getElementById('booth-video');
+  const boothChar   = document.getElementById('booth-character');
+  const stampLayer  = document.getElementById('booth-stamp-layer');
+  const boothFlash  = document.getElementById('booth-flash');
+  const boothCanvas = document.getElementById('booth-bubble-canvas');
+  const boothCtx    = boothCanvas.getContext('2d');
+
+  let boothStream = null;
+  let boothFront = false;
+  let boothBubbles = [];
+  let boothBubbleId = null;
+
+  // 気泡（カメラビューと同じBubbleクラスをboothCtx用に複製）
+  class BoothBubble {
+    constructor() { this.reset(); }
+    reset() {
+      this.x = Math.random() * window.innerWidth;
+      this.y = window.innerHeight + Math.random() * 100;
+      this.r = 2 + Math.random() * 9;
+      this.vy = 0.4 + Math.random() * 1.6;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.sway = Math.random() * Math.PI * 2;
+      this.opacity = 0.3 + Math.random() * 0.5;
+    }
+    update() {
+      this.y -= this.vy;
+      this.sway += 0.02;
+      this.x += Math.sin(this.sway) * 0.6 + this.vx;
+      if (this.y < -20) this.reset();
+    }
+    draw(ctx) {
+      ctx.save();
+      ctx.globalAlpha = this.opacity;
+      const grd = ctx.createRadialGradient(this.x - this.r*0.3, this.y - this.r*0.3, 0, this.x, this.y, this.r);
+      grd.addColorStop(0,   'rgba(255,255,255,0.95)');
+      grd.addColorStop(0.4, 'rgba(200,230,255,0.5)');
+      grd.addColorStop(1,   'rgba(150,200,240,0.05)');
+      ctx.fillStyle = grd;
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = 'rgba(255,255,255,0.7)';
+      ctx.beginPath();
+      ctx.arc(this.x - this.r*0.3, this.y - this.r*0.4, this.r*0.25, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+  function resizeBoothCanvas() {
+    boothCanvas.width  = window.innerWidth  * window.devicePixelRatio;
+    boothCanvas.height = window.innerHeight * window.devicePixelRatio;
+    boothCanvas.style.width  = window.innerWidth + 'px';
+    boothCanvas.style.height = window.innerHeight + 'px';
+    boothCtx.setTransform(1,0,0,1,0,0);
+    boothCtx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  function animateBoothBubbles() {
+    boothCtx.clearRect(0, 0, boothCanvas.width, boothCanvas.height);
+    boothBubbles.forEach(b => { b.update(); b.draw(boothCtx); });
+    boothBubbleId = requestAnimationFrame(animateBoothBubbles);
+  }
+  function startBoothBubbles() {
+    resizeBoothCanvas();
+    if (boothBubbles.length === 0) boothBubbles = Array.from({length: 28}, () => new BoothBubble());
+    if (!boothBubbleId) animateBoothBubbles();
+  }
+  function stopBoothBubbles() {
+    if (boothBubbleId) { cancelAnimationFrame(boothBubbleId); boothBubbleId = null; }
+  }
+
+  async function startBooth() {
+    try {
+      if (boothStream) boothStream.getTracks().forEach(t => t.stop());
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: boothFront ? 'user' : 'environment', width:{ideal:1920}, height:{ideal:1080} },
+        audio: false
+      });
+      boothStream = stream;
+      boothVideo.srcObject = stream;
+      boothView.classList.add('active');
+      startBoothBubbles();
+    } catch (err) {
+      console.error('Booth camera error:', err);
+      if (err.name === 'NotAllowedError') {
+        errorMsg.textContent = 'カメラへのアクセスが拒否されました。ブラウザ設定からカメラ許可を有効にしてください。';
+      } else {
+        errorMsg.textContent = 'カメラの起動に失敗しました: ' + (err.message || err.name);
+      }
+      errorView.classList.add('active');
+    }
+  }
+  function closeBooth() {
+    if (boothStream) { boothStream.getTracks().forEach(t => t.stop()); boothStream = null; }
+    boothView.classList.remove('active');
+    stopBoothBubbles();
+  }
+
+  document.getElementById('photo-panel-entry').addEventListener('click', startBooth);
+  document.getElementById('booth-close').addEventListener('click', closeBooth);
+  document.getElementById('booth-switch').addEventListener('click', () => { boothFront = !boothFront; startBooth(); });
+
+  // ─── ドラッグ移動（立ち絵・スタンプ共通） ───
+  function makeDraggable(el) {
+    let dragging = false, offsetX = 0, offsetY = 0;
+    function onDown(e) {
+      dragging = true;
+      const pt = e.touches ? e.touches[0] : e;
+      const rect = el.getBoundingClientRect();
+      // 中心基準のtransformを考慮
+      if (el.classList.contains('placed-stamp')) {
+        offsetX = pt.clientX - (rect.left + rect.width/2);
+        offsetY = pt.clientY - (rect.top + rect.height/2);
+      } else {
+        offsetX = pt.clientX - rect.left;
+        offsetY = pt.clientY - rect.top;
+      }
+      el.style.cursor = 'grabbing';
+      e.preventDefault();
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      const pt = e.touches ? e.touches[0] : e;
+      if (el.classList.contains('placed-stamp')) {
+        el.style.left = (pt.clientX - offsetX) + 'px';
+        el.style.top  = (pt.clientY - offsetY) + 'px';
+      } else {
+        // 立ち絵は right/bottom 基準をやめて left/top で扱う
+        el.style.right = 'auto';
+        el.style.bottom = 'auto';
+        el.style.left = (pt.clientX - offsetX) + 'px';
+        el.style.top  = (pt.clientY - offsetY) + 'px';
+      }
+      e.preventDefault();
+    }
+    function onUp() { dragging = false; el.style.cursor = 'grab'; }
+    el.addEventListener('mousedown', onDown);
+    el.addEventListener('touchstart', onDown, { passive: false });
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('touchmove', onMove, { passive: false });
+    window.addEventListener('mouseup', onUp);
+    window.addEventListener('touchend', onUp);
+  }
+  makeDraggable(boothChar);
+
+  // ─── スタンプパレット ───
+  const stampToggle  = document.getElementById('stamp-toggle');
+  const stampOptions = document.getElementById('stamp-options');
+  stampToggle.addEventListener('click', () => stampOptions.classList.toggle('open'));
+
+  document.querySelectorAll('.stamp-pick').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const type = btn.dataset.type;
+      const val  = btn.dataset.val;
+      const stamp = document.createElement('div');
+      stamp.className = 'placed-stamp';
+      // 画面中央に出す
+      stamp.style.left = '50%';
+      stamp.style.top  = '45%';
+      if (type === 'emoji') {
+        stamp.textContent = val;
+      } else {
+        const img = document.createElement('img');
+        img.src = val;
+        stamp.appendChild(img);
+      }
+      // ダブルタップ/ダブルクリックで削除
+      let lastTap = 0;
+      const removeHandler = () => stamp.remove();
+      stamp.addEventListener('dblclick', removeHandler);
+      stamp.addEventListener('touchend', (e) => {
+        const now = Date.now();
+        if (now - lastTap < 300) { removeHandler(); }
+        lastTap = now;
+      });
+      stampLayer.appendChild(stamp);
+      makeDraggable(stamp);
+      stampOptions.classList.remove('open');
+    });
+  });
+
+  // ─── フォトブース撮影 ───
+  document.getElementById('booth-shutter').addEventListener('click', takeBoothPhoto);
+
+  function takeBoothPhoto() {
+    if (!boothVideo.videoWidth) return;
+    boothFlash.classList.remove('flash');
+    void boothFlash.offsetWidth;
+    boothFlash.classList.add('flash');
+
+    setTimeout(() => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const W = Math.round(window.innerWidth * dpr);
+      const H = Math.round(window.innerHeight * dpr);
+      const out = document.createElement('canvas');
+      out.width = W; out.height = H;
+      const c = out.getContext('2d');
+
+      // 1) カメラ映像 (cover, 補正なし)
+      const vw = boothVideo.videoWidth, vh = boothVideo.videoHeight;
+      const vr = vw / vh, sr = W / H;
+      let sx, sy, sw, sh;
+      if (vr > sr) { sh = vh; sw = vh * sr; sx = (vw - sw)/2; sy = 0; }
+      else         { sw = vw; sh = vw / sr; sx = 0; sy = (vh - sh)/2; }
+      c.drawImage(boothVideo, sx, sy, sw, sh, 0, 0, W, H);
+
+      // 2) 気泡
+      boothBubbles.forEach(b => {
+        const sxB = b.x * dpr, syB = b.y * dpr, srB = b.r * dpr;
+        if (sxB < -srB || sxB > W+srB || syB < -srB || syB > H+srB) return;
+        c.save();
+        c.globalAlpha = b.opacity;
+        const grd = c.createRadialGradient(sxB - srB*0.3, syB - srB*0.3, 0, sxB, syB, srB);
+        grd.addColorStop(0, 'rgba(255,255,255,0.95)');
+        grd.addColorStop(0.4, 'rgba(200,230,255,0.5)');
+        grd.addColorStop(1, 'rgba(150,200,240,0.05)');
+        c.fillStyle = grd;
+        c.beginPath(); c.arc(sxB, syB, srB, 0, Math.PI*2); c.fill();
+        c.fillStyle = 'rgba(255,255,255,0.7)';
+        c.beginPath(); c.arc(sxB - srB*0.3, syB - srB*0.4, srB*0.25, 0, Math.PI*2); c.fill();
+        c.restore();
+      });
+
+      // 3) 立ち絵
+      const charRect = boothChar.getBoundingClientRect();
+      c.drawImage(boothChar,
+        charRect.left * dpr, charRect.top * dpr,
+        charRect.width * dpr, charRect.height * dpr);
+
+      // 4) スタンプ
+      document.querySelectorAll('.placed-stamp').forEach(stamp => {
+        const r = stamp.getBoundingClientRect();
+        const cx = (r.left + r.width/2) * dpr;
+        const cy = (r.top + r.height/2) * dpr;
+        const img = stamp.querySelector('img');
+        if (img) {
+          const w = r.width * dpr, h = r.height * dpr;
+          c.drawImage(img, cx - w/2, cy - h/2, w, h);
+        } else {
+          // 絵文字
+          c.save();
+          c.font = `${r.height * dpr * 0.9}px serif`;
+          c.textAlign = 'center';
+          c.textBaseline = 'middle';
+          c.fillText(stamp.textContent, cx, cy);
+          c.restore();
+        }
+      });
+
+      // 5) 青フレーム
+      const fw = 14 * dpr;
+      const grdFrame = c.createLinearGradient(0, 0, W, H);
+      grdFrame.addColorStop(0,    '#4aa0e8');
+      grdFrame.addColorStop(0.25, '#2a6cc0');
+      grdFrame.addColorStop(0.5,  '#5ec8f0');
+      grdFrame.addColorStop(0.75, '#2a6cc0');
+      grdFrame.addColorStop(1,    '#4aa0e8');
+      c.strokeStyle = grdFrame;
+      c.lineWidth = fw;
+      c.strokeRect(fw/2, fw/2, W - fw, H - fw);
+      // 内側グロー
+      c.save();
+      c.globalCompositeOperation = 'multiply';
+      const grdGlow = c.createRadialGradient(W/2, H/2, Math.min(W,H)*0.3, W/2, H/2, Math.max(W,H)*0.7);
+      grdGlow.addColorStop(0, 'rgba(255,255,255,1)');
+      grdGlow.addColorStop(1, 'rgba(40,100,180,0.6)');
+      c.fillStyle = grdGlow;
+      c.fillRect(0, 0, W, H);
+      c.restore();
+
+      const dataUrl = out.toDataURL('image/png');
+      photoPreview.src = dataUrl;
+      photoDownload.href = dataUrl;
+      out.toBlob(blob => { lastPhotoBlob = blob; }, 'image/png');
+      photoResult.classList.add('active');
+    }, 200);
+  }
+
+  // photo-close / retake はフォトブースにも適用させる
+  document.getElementById('photo-close').addEventListener('click', () => {
+    if (boothView.classList.contains('active')) closeBooth();
+  });
 })();
 </script>
 </body>
