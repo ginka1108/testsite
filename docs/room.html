@@ -518,12 +518,88 @@
       /* 通常カメラ：歪み・色補正なし */
     }
 
+    /* 美顔処理済みフレームの表示用キャンバス（video の上に重ねる） */
+    #beauty-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;        /* video(0) の上、気泡(5) の下 */
+      pointer-events: none;
+      display: none;     /* 美顔ONのときだけ表示 */
+    }
+    #beauty-canvas.active { display: block; }
+
     #booth-bubble-canvas {
       position: absolute;
       inset: 0;
       pointer-events: none;
       z-index: 5;
     }
+
+    /* 美顔コントロール（左下） */
+    #beauty-panel {
+      position: absolute;
+      left: 16px;
+      bottom: calc(env(safe-area-inset-bottom, 0px) + 24px);
+      z-index: 30;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      font-family: "Noto Sans JP", sans-serif;
+    }
+    .beauty-toggle {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(20, 50, 110, 0.78);
+      color: #cfe6ff;
+      font-size: 22px;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+      transition: transform .15s ease, background .15s ease;
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+    .beauty-toggle:hover { transform: scale(1.08); background: rgba(40, 80, 160, 0.9); }
+    .beauty-toggle.on { background: rgba(90, 200, 240, 0.9); color: #06243f; }
+
+    .beauty-options {
+      display: none;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: rgba(12, 30, 64, 0.86);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      min-width: 200px;
+      color: #e6f2ff;
+    }
+    .beauty-options.open { display: flex; }
+    .beauty-options .bp-title {
+      font-size: 12px; letter-spacing: .08em; opacity: .7;
+    }
+    .beauty-row {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px; font-size: 13px;
+    }
+    .beauty-row label { white-space: nowrap; }
+    .beauty-row input[type="range"] {
+      flex: 1;
+      accent-color: #5ec8f0;
+    }
+    .beauty-row .bp-val {
+      width: 30px; text-align: right; font-variant-numeric: tabular-nums; opacity: .85;
+    }
+    .beauty-shape-note {
+      font-size: 11px; line-height: 1.5; opacity: .6;
+    }
+    .beauty-shape-row.disabled { opacity: .35; pointer-events: none; }
 
     /* 青基調フレーム装飾 */
     #booth-frame {
@@ -774,6 +850,8 @@
 ═══════════════════════════════════════════ -->
 <div id="booth-view">
   <video id="booth-video" autoplay playsinline muted></video>
+  <!-- 美顔処理済みフレーム（video の上に重ねて表示） -->
+  <canvas id="beauty-canvas"></canvas>
   <canvas id="booth-bubble-canvas"></canvas>
 
   <!-- 青基調フレーム装飾 -->
@@ -786,6 +864,40 @@
   <div id="booth-stamp-layer"></div>
 
   <div id="booth-flash"></div>
+
+  <!-- 美顔コントロール -->
+  <div id="beauty-panel">
+    <div class="beauty-options" id="beauty-options">
+      <div class="bp-title">美顔モード</div>
+      <div class="beauty-row">
+        <label>なめらか肌</label>
+        <input type="range" id="bp-smooth" min="0" max="100" value="55">
+        <span class="bp-val" id="bp-smooth-val">55</span>
+      </div>
+      <div class="beauty-row">
+        <label>明るさ</label>
+        <input type="range" id="bp-bright" min="0" max="100" value="35">
+        <span class="bp-val" id="bp-bright-val">35</span>
+      </div>
+      <div class="beauty-row">
+        <label>血色</label>
+        <input type="range" id="bp-warm" min="0" max="100" value="30">
+        <span class="bp-val" id="bp-warm-val">30</span>
+      </div>
+      <div class="beauty-row beauty-shape-row" id="bp-eye-row">
+        <label>デカ目</label>
+        <input type="range" id="bp-eye" min="0" max="100" value="0">
+        <span class="bp-val" id="bp-eye-val">0</span>
+      </div>
+      <div class="beauty-row beauty-shape-row" id="bp-slim-row">
+        <label>小顔</label>
+        <input type="range" id="bp-slim" min="0" max="100" value="0">
+        <span class="bp-val" id="bp-slim-val">0</span>
+      </div>
+      <div class="beauty-shape-note" id="bp-shape-note"></div>
+    </div>
+    <button class="beauty-toggle" id="beauty-toggle" aria-label="美顔">✨</button>
+  </div>
 
   <!-- スタンプ選択パレット -->
   <div id="stamp-palette">
@@ -1348,6 +1460,294 @@
   let boothBubbles = [];
   let boothBubbleId = null;
 
+  // ═══════════════════════════════════════════
+  // 6.5 美顔エンジン（MediaPipe FaceLandmarker ベース）
+  //   - 肌なめらか化: 縮小ブラー × 元映像のソフト合成（顔検出不要）
+  //   - 明るさ / 血色: 軽い色調補正（顔検出不要）
+  //   - デカ目 / 小顔: 468点ランドマークでローカルワープ
+  //     ※ WASM/モデルは同一オリジン（GitHub Pages）から読み込む
+  // ═══════════════════════════════════════════
+
+  // 自前ホスト用パス（リポジトリ内に配置：下記READMEの手順参照）
+  const MP_WASM_PATH  = 'assets/mediapipe/wasm';
+  const MP_MODEL_PATH = 'assets/mediapipe/face_landmarker.task';
+  const MP_BUNDLE_URL = 'assets/mediapipe/vision_bundle.mjs';
+
+  const beautyCanvas = document.getElementById('beauty-canvas');
+
+  // 美顔パラメータ（0〜1に正規化して保持）
+  const beauty = {
+    enabled: false,
+    smooth: 0.55,   // なめらか肌
+    bright: 0.35,   // 明るさ
+    warm:   0.30,   // 血色
+    eye:    0.0,    // デカ目
+    slim:   0.0,    // 小顔
+  };
+
+  // 作業用オフスクリーン
+  const workFull  = document.createElement('canvas'); // 等倍合成用
+  const workCtx   = workFull.getContext('2d', { willReadFrequently: true });
+  const workSmall = document.createElement('canvas'); // 縮小ブラー用
+  const workSmCtx = workSmall.getContext('2d');
+
+  // ─── MediaPipe FaceLandmarker（遅延ロード） ───
+  let faceLandmarker = null;
+  let faceReady   = false;   // モデルのロード完了
+  let faceLoading = false;
+  let faceFailed  = false;
+  let lastResult  = null;    // 直近の検出結果（landmarks配列）
+
+  async function ensureFaceLandmarker() {
+    if (faceReady || faceLoading || faceFailed) return;
+    faceLoading = true;
+    bpShapeNote.textContent = '※ 顔認識を読み込み中…';
+    try {
+      const vision = await import(new URL(MP_BUNDLE_URL, document.baseURI).href);
+      const { FaceLandmarker, FilesetResolver } = vision;
+      const resolver = await FilesetResolver.forVisionTasks(new URL(MP_WASM_PATH, document.baseURI).href);
+      faceLandmarker = await FaceLandmarker.createFromOptions(resolver, {
+        baseOptions: { modelAssetPath: new URL(MP_MODEL_PATH, document.baseURI).href, delegate: 'GPU' },
+        runningMode: 'VIDEO',
+        numFaces: 2,
+        // 虹彩点（468〜477）を有効化して目の中心精度を上げる
+        outputFaceBlendshapes: false,
+        outputFacialTransformationMatrixes: false,
+      });
+      faceReady = true;
+      bpShapeNote.textContent = '※ 顔が映っているときだけ効きます';
+    } catch (e) {
+      console.error('FaceLandmarker load failed:', e);
+      faceFailed = true;
+      bpShapeNote.textContent = '※ 顔認識の読み込みに失敗しました（肌補正のみ動作）';
+      document.getElementById('bp-eye-row').classList.add('disabled');
+      document.getElementById('bp-slim-row').classList.add('disabled');
+    } finally {
+      faceLoading = false;
+    }
+  }
+
+  let beautyRAF = null;
+
+  // 直近の cover パラメータ（変形で座標変換に使う）
+  let _cover = { sx:0, sy:0, sw:0, sh:0, dw:0, dh:0 };
+
+  // メイン処理：source を beauty 補正して dstCtx の (0,0,dw,dh) に描く
+  function applyBeauty(source, srcW, srcH, dstCtx, dw, dh) {
+    const sr = dw / dh, vr = srcW / srcH;
+    let sx, sy, sw, sh;
+    if (vr > sr) { sh = srcH; sw = srcH * sr; sx = (srcW - sw) / 2; sy = 0; }
+    else         { sw = srcW; sh = srcW / sr; sx = 0; sy = (srcH - sh) / 2; }
+    _cover = { sx, sy, sw, sh, dw, dh };
+
+    if (workFull.width !== dw || workFull.height !== dh) {
+      workFull.width = dw; workFull.height = dh;
+    }
+    workCtx.setTransform(1, 0, 0, 1, 0, 0);
+
+    // 1) 肌なめらか化（縮小ブラーをソフトに重ねる）
+    if (beauty.smooth > 0.001) {
+      const scale = 0.28;
+      const bw = Math.max(2, Math.round(dw * scale));
+      const bh = Math.max(2, Math.round(dh * scale));
+      if (workSmall.width !== bw || workSmall.height !== bh) {
+        workSmall.width = bw; workSmall.height = bh;
+      }
+      workSmCtx.setTransform(1, 0, 0, 1, 0, 0);
+      workSmCtx.imageSmoothingEnabled = true;
+      workSmCtx.drawImage(source, sx, sy, sw, sh, 0, 0, bw, bh);
+
+      workCtx.globalAlpha = 1;
+      workCtx.globalCompositeOperation = 'source-over';
+      workCtx.imageSmoothingEnabled = true;
+      workCtx.drawImage(source, sx, sy, sw, sh, 0, 0, dw, dh);
+
+      workCtx.globalAlpha = 0.35 + beauty.smooth * 0.5;  // 0.35〜0.85
+      workCtx.drawImage(workSmall, 0, 0, bw, bh, 0, 0, dw, dh);
+      workCtx.globalAlpha = 1;
+    } else {
+      workCtx.globalAlpha = 1;
+      workCtx.globalCompositeOperation = 'source-over';
+      workCtx.imageSmoothingEnabled = true;
+      workCtx.drawImage(source, sx, sy, sw, sh, 0, 0, dw, dh);
+    }
+
+    // 2) 明るさ / 血色
+    if (beauty.bright > 0.001) {
+      workCtx.save();
+      workCtx.globalCompositeOperation = 'lighten';
+      workCtx.globalAlpha = beauty.bright * 0.22;
+      workCtx.fillStyle = '#ffffff';
+      workCtx.fillRect(0, 0, dw, dh);
+      workCtx.restore();
+    }
+    if (beauty.warm > 0.001) {
+      workCtx.save();
+      workCtx.globalCompositeOperation = 'overlay';
+      workCtx.globalAlpha = beauty.warm * 0.20;
+      workCtx.fillStyle = '#ff8a6e';
+      workCtx.fillRect(0, 0, dw, dh);
+      workCtx.restore();
+    }
+
+    // 3) デカ目 / 小顔（ランドマーク取得時のみ）
+    if (faceReady && lastResult && lastResult.faceLandmarks &&
+        (beauty.eye > 0.001 || beauty.slim > 0.001)) {
+      lastResult.faceLandmarks.forEach(lm => {
+        if (beauty.slim > 0.001) warpSlim(workCtx, lm, beauty.slim);
+        if (beauty.eye  > 0.001) warpEyes(workCtx, lm, beauty.eye);
+      });
+    }
+
+    dstCtx.drawImage(workFull, 0, 0, dw, dh);
+  }
+
+  // 正規化ランドマーク(0〜1) → workFull(dst) のピクセル座標へ
+  function lmToPx(p) {
+    const { sx, sy, sw, sh, dw, dh } = _cover;
+    // ランドマークは「映像フレーム全体」基準。cover で切り出した分を補正
+    const fx = p.x * (workFull._srcW || 1);   // 後で _srcW を渡す
+    const fy = p.y * (workFull._srcH || 1);
+    return {
+      x: (fx - sx) * (dw / sw),
+      y: (fy - sy) * (dh / sh),
+    };
+  }
+
+  // デカ目：左右の虹彩中心を放射状に拡大
+  // MediaPipe(refine無し)では虹彩点が無い場合があるため、目輪郭の重心を使う
+  // 右目輪郭: 33,133,159,145 / 左目輪郭: 362,263,386,374
+  const R_EYE = [33, 133, 159, 145];
+  const L_EYE = [362, 263, 386, 374];
+  function eyeCenter(lm, idxs) {
+    let x = 0, y = 0;
+    idxs.forEach(i => { x += lm[i].x; y += lm[i].y; });
+    return { x: x / idxs.length, y: y / idxs.length };
+  }
+  function eyeWidthPx(lm, a, b) {
+    const pa = lmToPx(lm[a]), pb = lmToPx(lm[b]);
+    return Math.hypot(pa.x - pb.x, pa.y - pb.y);
+  }
+  function warpEyes(ctx, lm, amount) {
+    [[R_EYE, 33, 133], [L_EYE, 362, 263]].forEach(([idxs, a, b]) => {
+      const cN = eyeCenter(lm, idxs);
+      const c  = lmToPx(cN);
+      const eyeW = eyeWidthPx(lm, a, b);
+      const R = Math.max(24, eyeW * 1.6);   // 目幅に比例した影響半径
+      const zoom = 1 + amount * 0.26;       // 最大1.26倍
+      const r = Math.round(R);
+      const x0 = Math.max(0, c.x - r), y0 = Math.max(0, c.y - r);
+      const w = Math.min(ctx.canvas.width - x0, r * 2);
+      const h = Math.min(ctx.canvas.height - y0, r * 2);
+      if (w <= 2 || h <= 2) return;
+      const region = ctx.getImageData(x0, y0, w, h);
+      const tmp = document.createElement('canvas');
+      tmp.width = w; tmp.height = h;
+      tmp.getContext('2d').putImageData(region, 0, 0);
+      const nw = w * zoom, nh = h * zoom;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(c.x, c.y, R, 0, Math.PI * 2);
+      ctx.clip();
+      ctx.imageSmoothingEnabled = true;
+      ctx.drawImage(tmp, c.x - nw / 2, c.y - nh / 2, nw, nh);
+      ctx.restore();
+    });
+  }
+
+  // 小顔：顔輪郭の左右端(234/454)を中心線へ寄せる（頬〜あごのバンドを横圧縮）
+  function warpSlim(ctx, lm, amount) {
+    const left  = lmToPx(lm[234]);   // 左頬端
+    const right = lmToPx(lm[454]);   // 右頬端
+    const chin  = lmToPx(lm[152]);   // あご先
+    const fore  = lmToPx(lm[10]);    // 額上
+    const cx = (left.x + right.x) / 2;
+    const faceW = Math.abs(right.x - left.x);
+    const shrink = amount * 0.11;    // 最大11%内側へ
+
+    // 頬〜あごの帯（顔の縦中央より下を中心に）
+    const top = Math.min(fore.y + (chin.y - fore.y) * 0.45, ctx.canvas.height);
+    const bottom = Math.min(chin.y + faceW * 0.10, ctx.canvas.height);
+    const bx = Math.max(0, cx - faceW * 0.75);
+    const bw = Math.min(ctx.canvas.width - bx, faceW * 1.5);
+    const by = Math.max(0, top);
+    const bh = Math.max(2, Math.min(ctx.canvas.height - by, bottom - top));
+    if (bw <= 2 || bh <= 2) return;
+
+    const slice = ctx.getImageData(bx, by, bw, bh);
+    ctx.save();
+    ctx.clearRect(bx, by, bw, bh);
+    const tmp = document.createElement('canvas');
+    tmp.width = bw; tmp.height = bh;
+    tmp.getContext('2d').putImageData(slice, 0, 0);
+    const newW = bw * (1 - shrink);
+    ctx.imageSmoothingEnabled = true;
+    // 中心(cx)基準で横圧縮
+    const dx = bx + (cx - bx) * shrink;
+    ctx.drawImage(tmp, dx, by, newW, bh);
+    ctx.restore();
+  }
+
+  // リアルタイムプレビュー用ループ
+  function beautyLoop() {
+    if (beauty.enabled && boothVideo.videoWidth) {
+      const dw = beautyCanvas.clientWidth  || window.innerWidth;
+      const dh = beautyCanvas.clientHeight || window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const W = Math.round(dw * dpr), H = Math.round(dh * dpr);
+      if (beautyCanvas.width !== W || beautyCanvas.height !== H) {
+        beautyCanvas.width = W; beautyCanvas.height = H;
+      }
+      // 変形ONなら顔検出（VIDEOモードは内部でフレーム間引き最適化される）
+      if (faceReady && (beauty.eye > 0.001 || beauty.slim > 0.001)) {
+        try {
+          lastResult = faceLandmarker.detectForVideo(boothVideo, performance.now());
+        } catch (e) { /* フレームスキップ */ }
+      }
+      // ランドマークのスケール基準を保存
+      workFull._srcW = boothVideo.videoWidth;
+      workFull._srcH = boothVideo.videoHeight;
+      const ctx = beautyCanvas.getContext('2d');
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      applyBeauty(boothVideo, boothVideo.videoWidth, boothVideo.videoHeight, ctx, W, H);
+    }
+    beautyRAF = requestAnimationFrame(beautyLoop);
+  }
+  function startBeautyLoop() { if (!beautyRAF) beautyLoop(); }
+  function stopBeautyLoop() { if (beautyRAF) { cancelAnimationFrame(beautyRAF); beautyRAF = null; } }
+
+  // ─── 美顔UI ───
+  const beautyToggle  = document.getElementById('beauty-toggle');
+  const beautyOptions = document.getElementById('beauty-options');
+  const bpShapeNote   = document.getElementById('bp-shape-note');
+  bpShapeNote.textContent = '※ デカ目・小顔は顔認識を使用します';
+
+  function bindSlider(id, key) {
+    const el  = document.getElementById(id);
+    const val = document.getElementById(id + '-val');
+    el.addEventListener('input', () => {
+      beauty[key] = el.value / 100;
+      val.textContent = el.value;
+      // 変形系を初めて動かすタイミングでモデルを遅延ロード
+      if ((key === 'eye' || key === 'slim') && beauty[key] > 0.001) {
+        ensureFaceLandmarker();
+      }
+    });
+  }
+  bindSlider('bp-smooth', 'smooth');
+  bindSlider('bp-bright', 'bright');
+  bindSlider('bp-warm',   'warm');
+  bindSlider('bp-eye',    'eye');
+  bindSlider('bp-slim',   'slim');
+
+  beautyToggle.addEventListener('click', () => {
+    beauty.enabled = !beauty.enabled;
+    beautyToggle.classList.toggle('on', beauty.enabled);
+    beautyOptions.classList.toggle('open', beauty.enabled);
+    beautyCanvas.classList.toggle('active', beauty.enabled);
+    if (beauty.enabled) startBeautyLoop(); else stopBeautyLoop();
+  });
+
   // 気泡（カメラビューと同じBubbleクラスをboothCtx用に複製）
   class BoothBubble {
     constructor() { this.reset(); }
@@ -1417,6 +1817,7 @@
       boothVideo.srcObject = stream;
       boothView.classList.add('active');
       startBoothBubbles();
+      if (beauty.enabled) startBeautyLoop();
     } catch (err) {
       console.error('Booth camera error:', err);
       if (err.name === 'NotAllowedError') {
@@ -1431,6 +1832,7 @@
     if (boothStream) { boothStream.getTracks().forEach(t => t.stop()); boothStream = null; }
     boothView.classList.remove('active');
     stopBoothBubbles();
+    stopBeautyLoop();
   }
 
   document.getElementById('photo-panel-entry').addEventListener('click', startBooth);
@@ -1525,7 +1927,7 @@
     void boothFlash.offsetWidth;
     boothFlash.classList.add('flash');
 
-    setTimeout(() => {
+    setTimeout(async () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const W = Math.round(window.innerWidth * dpr);
       const H = Math.round(window.innerHeight * dpr);
@@ -1533,13 +1935,23 @@
       out.width = W; out.height = H;
       const c = out.getContext('2d');
 
-      // 1) カメラ映像 (cover, 補正なし)
+      // 1) カメラ映像 (cover) ── 美顔ONなら補正を通す
       const vw = boothVideo.videoWidth, vh = boothVideo.videoHeight;
-      const vr = vw / vh, sr = W / H;
-      let sx, sy, sw, sh;
-      if (vr > sr) { sh = vh; sw = vh * sr; sx = (vw - sw)/2; sy = 0; }
-      else         { sw = vw; sh = vw / sr; sx = 0; sy = (vh - sh)/2; }
-      c.drawImage(boothVideo, sx, sy, sw, sh, 0, 0, W, H);
+      if (beauty.enabled) {
+        // 撮影直前に変形系がONなら確実に1回検出
+        if (faceReady && (beauty.eye > 0.001 || beauty.slim > 0.001)) {
+          try { lastResult = faceLandmarker.detectForVideo(boothVideo, performance.now()); }
+          catch { /* スキップ */ }
+        }
+        workFull._srcW = vw; workFull._srcH = vh;
+        applyBeauty(boothVideo, vw, vh, c, W, H);
+      } else {
+        const vr = vw / vh, sr = W / H;
+        let sx, sy, sw, sh;
+        if (vr > sr) { sh = vh; sw = vh * sr; sx = (vw - sw)/2; sy = 0; }
+        else         { sw = vw; sh = vw / sr; sx = 0; sy = (vh - sh)/2; }
+        c.drawImage(boothVideo, sx, sy, sw, sh, 0, 0, W, H);
+      }
 
       // 2) 気泡
       boothBubbles.forEach(b => {
