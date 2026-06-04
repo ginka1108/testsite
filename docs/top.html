@@ -302,10 +302,22 @@
     const art = document.createElement('article');
     art.className = 'nc-card' + (i === midIdx ? ' nc-active' : '');
     art.dataset.idx = i;
+
+    // サムネイル: 画像あり → <img>、なし → badge テキストにフォールバック
+    const thumbHtml = item.thumbnail
+      ? `<div class="nc-thumb">
+           <img src="${item.thumbnail}" alt="${item.title}"
+             onerror="this.parentElement.outerHTML='<div class=\\'nc-thumb nc-thumb-fallback\\'><span>${item.badge}</span></div>'">
+         </div>`
+      : `<div class="nc-thumb nc-thumb-fallback"><span>${item.badge}</span></div>`;
+
     art.innerHTML = `<div class="nc-card-inner">
-      <span class="nc-badge">${item.badge}</span>
-      <h3 class="nc-title">${item.title}</h3>
-      <p class="nc-desc">${item.desc}</p>
+      ${thumbHtml}
+      <div class="nc-card-body">
+        <span class="nc-badge">${item.badge}</span>
+        <h3 class="nc-title">${item.title}</h3>
+        <p class="nc-desc">${item.desc}</p>
+      </div>
     </div>`;
     track.appendChild(art);
   });
