@@ -37,15 +37,13 @@
 
 <main class="subpage-main">
 
-<!-- 更新時刻バナー -->
 <section class="subpage-section update-section">
   <div class="update-banner reveal">
     <span class="update-label">更新時間</span>
-    <span class="update-time" id="update-time">2025-08-11 21:12:33 迄に終了した対局まで</span>
+    <span class="update-time" id="update-time">読み込み中...</span>
   </div>
 </section>
 
-<!-- ナビ -->
 <section class="subpage-section results-nav-section">
   <div class="results-tabs reveal">
     <button class="results-tab active" data-target="overall">総合ランキング</button>
@@ -58,13 +56,12 @@
 <section class="subpage-section results-pane active" id="pane-overall">
   <div class="ranking-grid">
 
-    <!-- チームランキング -->
     <div class="ranking-block glass-card reveal">
       <div class="ranking-header team-header">
         <img src="assets/uchiwa.png" alt="" class="ranking-icon">
         <h2 class="ranking-title">チームランキング</h2>
       </div>
-      <table class="ranking-table">
+      <table class="ranking-table" id="team-ranking-table">
         <thead>
           <tr>
             <th class="col-rank">順位</th>
@@ -73,43 +70,19 @@
             <th class="col-sub">内勝関Pt</th>
           </tr>
         </thead>
-        <tbody>
-          <tr class="rank-1">
-            <td class="col-rank"><span class="rank-medal">1位</span></td>
-            <td class="col-name">蒼星月花</td>
-            <td class="col-pt">178,290</td>
-            <td class="col-sub">8,900</td>
-          </tr>
-          <tr class="rank-2">
-            <td class="col-rank"><span class="rank-medal">2位</span></td>
-            <td class="col-name">れいめあビアガーデン</td>
-            <td class="col-pt">152,500</td>
-            <td class="col-sub">5,000</td>
-          </tr>
-          <tr class="rank-3">
-            <td class="col-rank"><span class="rank-medal">3位</span></td>
-            <td class="col-name">縁日で射的！</td>
-            <td class="col-pt">145,200</td>
-            <td class="col-sub">6,650</td>
-          </tr>
-          <tr>
-            <td class="col-rank">4位</td>
-            <td class="col-name">爆裂夏花火</td>
-            <td class="col-pt">138,850</td>
-            <td class="col-sub">4,750</td>
-          </tr>
+        <tbody id="team-ranking-body">
+          <tr><td colspan="4" style="text-align:center;color:var(--c-dim);padding:24px;">読み込み中...</td></tr>
         </tbody>
       </table>
     </div>
 
-    <!-- 個人ランキング -->
     <div class="ranking-block glass-card reveal">
       <div class="ranking-header personal-header">
         <img src="assets/fuurin.png" alt="" class="ranking-icon">
         <h2 class="ranking-title">個人ランキング</h2>
       </div>
       <div class="ranking-scroll">
-        <table class="ranking-table">
+        <table class="ranking-table" id="personal-ranking-table">
           <thead>
             <tr>
               <th class="col-rank">順位</th>
@@ -118,64 +91,8 @@
               <th class="col-pt">獲得Pt</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class="rank-1">
-              <td class="col-rank"><span class="rank-medal">1位</span></td>
-              <td class="col-name">さめ</td>
-              <td class="col-team">れいめあビアガーデン</td>
-              <td class="col-pt">7,640</td>
-            </tr>
-            <tr class="rank-2">
-              <td class="col-rank"><span class="rank-medal">2位</span></td>
-              <td class="col-name">東雲ハヤテ</td>
-              <td class="col-team">縁日で射的！</td>
-              <td class="col-pt">7,300</td>
-            </tr>
-            <tr class="rank-3">
-              <td class="col-rank"><span class="rank-medal">3位</span></td>
-              <td class="col-name">脳筋の伊豆</td>
-              <td class="col-team">蒼星月花</td>
-              <td class="col-pt">7,280</td>
-            </tr>
-            <tr>
-              <td class="col-rank">4位</td>
-              <td class="col-name">ヨッシー9zde</td>
-              <td class="col-team">爆裂夏花火</td>
-              <td class="col-pt">7,020</td>
-            </tr>
-            <tr>
-              <td class="col-rank">5位</td>
-              <td class="col-name">三國レオ</td>
-              <td class="col-team">爆裂夏花火</td>
-              <td class="col-pt">6,430</td>
-            </tr>
-            <tr>
-              <td class="col-rank">6位</td>
-              <td class="col-name">winsent</td>
-              <td class="col-team">爆裂夏花火</td>
-              <td class="col-pt">6,300</td>
-            </tr>
-            <tr>
-              <td class="col-rank">7位</td>
-              <td class="col-name">ハガT</td>
-              <td class="col-team">蒼星月花</td>
-              <td class="col-pt">6,220</td>
-            </tr>
-            <tr>
-              <td class="col-rank">8位</td>
-              <td class="col-name">えび</td>
-              <td class="col-team">爆裂夏花火</td>
-              <td class="col-pt">6,170</td>
-            </tr>
-            <tr>
-              <td class="col-rank">9位</td>
-              <td class="col-name">アイオらいと</td>
-              <td class="col-team">縁日で射的！</td>
-              <td class="col-pt">5,820</td>
-            </tr>
-            <tr class="more-row">
-              <td colspan="4" class="more-cell">— サンプルデータ表示中 —</td>
-            </tr>
+          <tbody id="personal-ranking-body">
+            <tr><td colspan="4" style="text-align:center;color:var(--c-dim);padding:24px;">読み込み中...</td></tr>
           </tbody>
         </table>
       </div>
@@ -184,7 +101,7 @@
   </div>
 </section>
 
-<!-- 日別ランキング（プレースホルダ） -->
+<!-- 日別ランキング -->
 <section class="subpage-section results-pane" id="pane-daily">
   <div class="placeholder-block glass-card reveal">
     <img src="assets/kasa.png" alt="" class="placeholder-icon">
@@ -193,7 +110,7 @@
   </div>
 </section>
 
-<!-- 打数ランキング（プレースホルダ） -->
+<!-- 打数ランキング -->
 <section class="subpage-section results-pane" id="pane-counts">
   <div class="placeholder-block glass-card reveal">
     <img src="assets/kasa.png" alt="" class="placeholder-icon">
@@ -207,31 +124,75 @@
 <footer>
   <img src="assets/logo-dark.png" alt="きみ夏宵あそび" style="height:48px; margin-bottom:20px; opacity:0.7;">
   <p>めあともえ presents「きみ夏宵あそび」Night Fes</p>
-  <p>© 2024 めあともえ企画 — このサイトはデザインモックです</p>
+  <p>© 2024 めあともえ企画</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/data-loader.js"></script>
 <script>
-  gsap.registerPlugin(ScrollTrigger);
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+gsap.registerPlugin(ScrollTrigger);
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+
+function revealAll() {
   document.querySelectorAll('.reveal').forEach(el => {
     const delay = parseFloat(el.style.getPropertyValue('--delay') || '0');
     gsap.to(el, { opacity: 1, y: 0, duration: 0.85, delay, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' } });
   });
+}
 
-  // Tab switching
-  const tabs = document.querySelectorAll('.results-tab');
-  const panes = document.querySelectorAll('.results-pane');
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.dataset.target;
-      tabs.forEach(t => t.classList.toggle('active', t === tab));
-      panes.forEach(p => p.classList.toggle('active', p.id === `pane-${target}`));
-    });
+function medalHtml(rank) {
+  if (rank <= 3) return `<span class="rank-medal">${rank}位</span>`;
+  return `${rank}位`;
+}
+
+async function loadResults() {
+  const data = await KNY.load('results');
+
+  // 更新時刻
+  document.getElementById('update-time').textContent =
+    `${data.meta.updated_at} ${data.meta.updated_label}`;
+
+  // チームランキング
+  const teamBody = document.getElementById('team-ranking-body');
+  teamBody.innerHTML = data.team_ranking.map(r => `
+    <tr class="${r.rank <= 3 ? 'rank-' + r.rank : ''}">
+      <td class="col-rank">${medalHtml(r.rank)}</td>
+      <td class="col-name">${r.name}</td>
+      <td class="col-pt">${KNY.num(r.points)}</td>
+      <td class="col-sub">${KNY.num(r.kansen_points)}</td>
+    </tr>`).join('');
+
+  // 個人ランキング
+  const persBody = document.getElementById('personal-ranking-body');
+  const rows = data.personal_ranking.map(r => `
+    <tr class="${r.rank <= 3 ? 'rank-' + r.rank : ''}">
+      <td class="col-rank">${medalHtml(r.rank)}</td>
+      <td class="col-name">${r.name}</td>
+      <td class="col-team">${r.team}</td>
+      <td class="col-pt">${KNY.num(r.points)}</td>
+    </tr>`).join('');
+  persBody.innerHTML = rows || '<tr><td colspan="4" class="more-cell">— データなし —</td></tr>';
+}
+
+// タブ切り替え
+const tabs = document.querySelectorAll('.results-tab');
+const panes = document.querySelectorAll('.results-pane');
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const target = tab.dataset.target;
+    tabs.forEach(t => t.classList.toggle('active', t === tab));
+    panes.forEach(p => p.classList.toggle('active', p.id === `pane-${target}`));
   });
+});
+
+(async () => {
+  try { await loadResults(); }
+  catch (e) { console.error('Data load error:', e); }
+  revealAll();
+})();
 </script>
 </body>
 </html>

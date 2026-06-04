@@ -37,7 +37,6 @@
 
 <main class="subpage-main">
 
-<!-- イントロ -->
 <section class="subpage-section sponsors-intro-section">
   <div class="sponsors-intro reveal glass-card">
     <img src="assets/chouchin.png" alt="" class="intro-icon left">
@@ -46,14 +45,12 @@
   </div>
 </section>
 
-<!-- 賞品・協賛一覧 -->
 <section class="subpage-section sponsors-list-section">
   <div class="section-title reveal">
     <span class="en">Award List</span>
     <h2 class="ja">賞品・協賛一覧</h2>
     <div class="divider"></div>
   </div>
-
   <div class="sponsors-table-wrap reveal glass-card">
     <table class="sponsors-table">
       <thead>
@@ -64,40 +61,8 @@
           <th class="col-prize">商品</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td class="col-award"><span class="award-name">本祭二日目最多打数</span></td>
-          <td class="col-cond">二日目対局数一位</td>
-          <td class="col-sponsor">協賛: 深海projectさま</td>
-          <td class="col-prize"><span class="prize-tag">アマギフ2000円</span></td>
-        </tr>
-        <tr>
-          <td class="col-award"><span class="award-name">本祭三日目デイリートップ</span></td>
-          <td class="col-cond">三日目個人ポイントランキング一位</td>
-          <td class="col-sponsor">協賛: ウザクさま</td>
-          <td class="col-prize"><span class="prize-tag">アマギフ2000円</span></td>
-        </tr>
-        <tr>
-          <td class="col-award"><span class="award-name">本祭三日目最多打数</span></td>
-          <td class="col-cond">三日目対局数一位</td>
-          <td class="col-sponsor">協賛: ウザクさま</td>
-          <td class="col-prize"><span class="prize-tag">アマギフ2000円</span></td>
-        </tr>
-        <tr>
-          <td class="col-award"><span class="award-name">あなたが有望株で賞</span></td>
-          <td class="col-cond">一日目開始3hの最多Pt賞</td>
-          <td class="col-sponsor">協賛: ちぃーちぃーさま</td>
-          <td class="col-prize"><span class="prize-tag">アマギフ1000円</span></td>
-        </tr>
-        <tr>
-          <td class="col-award"><span class="award-name">コービンさん賞</span></td>
-          <td class="col-cond">トビ回数46回の方</td>
-          <td class="col-sponsor">協賛: もるもさま</td>
-          <td class="col-prize"><span class="prize-tag">アマギフ1000円</span></td>
-        </tr>
-        <tr class="placeholder-row">
-          <td colspan="4" class="placeholder-cell">— 賞品・協賛は随時追加されます —</td>
-        </tr>
+      <tbody id="sponsors-tbody">
+        <tr><td colspan="4" style="text-align:center;color:var(--c-dim);padding:24px;">読み込み中...</td></tr>
       </tbody>
     </table>
   </div>
@@ -118,20 +83,47 @@
 <footer>
   <img src="assets/logo-dark.png" alt="きみ夏宵あそび" style="height:48px; margin-bottom:20px; opacity:0.7;">
   <p>めあともえ presents「きみ夏宵あそび」Night Fes</p>
-  <p>© 2024 めあともえ企画 — このサイトはデザインモックです</p>
+  <p>© 2024 めあともえ企画</p>
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="js/data-loader.js"></script>
 <script>
-  gsap.registerPlugin(ScrollTrigger);
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+gsap.registerPlugin(ScrollTrigger);
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10), { passive: true });
+
+function revealAll() {
   document.querySelectorAll('.reveal').forEach(el => {
     const delay = parseFloat(el.style.getPropertyValue('--delay') || '0');
     gsap.to(el, { opacity: 1, y: 0, duration: 0.85, delay, ease: 'power2.out',
       scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' } });
   });
+}
+
+async function loadSponsors() {
+  const { sponsors } = await KNY.load('sponsors');
+  const tbody = document.getElementById('sponsors-tbody');
+  if (!sponsors || sponsors.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" class="placeholder-row" style="text-align:center;color:var(--c-dim);padding:24px;">— 賞品・協賛は随時追加されます —</td></tr>';
+    return;
+  }
+  tbody.innerHTML = sponsors.map(s => `
+    <tr>
+      <td class="col-award"><span class="award-name">${s.award}</span></td>
+      <td class="col-cond">${s.condition}</td>
+      <td class="col-sponsor">協賛: ${s.sponsor}</td>
+      <td class="col-prize"><span class="prize-tag">${s.prize}</span></td>
+    </tr>`).join('') +
+    '<tr class="placeholder-row"><td colspan="4" class="placeholder-cell">— 賞品・協賛は随時追加されます —</td></tr>';
+}
+
+(async () => {
+  try { await loadSponsors(); }
+  catch (e) { console.error('Data load error:', e); }
+  revealAll();
+})();
 </script>
 </body>
 </html>
