@@ -9,7 +9,7 @@
       "avatar_initial": "キ",
       "avatar_hue": 260,
       "links": {
-        "twitter": null,
+        "twitter": "https://x.com/nagai_kirin",
         "youtube": null,
         "booth": null,
         "pixiv": null,
@@ -25,82 +25,82 @@
           "badge": "つなぐ",
           "desc": "きみ夏宵あそびのイメージのリアクションタンクやスパチャ演出を手掛けたながいキリンさま、現在もご依頼受付中！自分だけの配信画面を作りたいかたはぜひ！",
           "cta": "つなぐで依頼する",
-          "url": null
+          "url": "https://tsunagu.cloud/products/93702"
         },
         {
-          "title": "イベントメインビジュアルイラスト",
-          "type": "pixiv",
-          "type_label": "pixiv",
+          "title": "HP",
+          "type": "HP",
+          "type_label": "HP",
           "thumb": "assets/creators/work-01-02.jpg",
           "thumb_emoji": "🎆",
           "badge": "pixiv",
           "desc": "花火と浴衣をテーマに描き下ろしたメインビジュアル。夏の夜のひとときを切り取りました。",
           "cta": "pixivで見る",
-          "url": null
+          "url": "https://piku.page/@nagai_kirin"
         },
         {
-          "title": "コミッション受付中",
-          "type": "skeb",
+          "title": "自作配信ツール販売中！",
+          "type": "BOOTH",
           "type_label": "SKEB",
           "thumb": "assets/creators/work-01-03.jpg",
           "thumb_emoji": "✨",
           "badge": "SKEB",
           "desc": "キャラクターイラストの制作を承っています。背景付き・SDなどご相談ください。イベント期間中は優先対応します。",
           "cta": "Skebでリクエスト",
-          "url": null
+          "url": "https://nagai-kirin.booth.pm"
         }
       ]
     },
     {
       "id": "mormo_music",
-      "name": "もるも",
+      "name": "斉唱なごん",
       "handle": "@mormo_music",
-      "role": "MUSIC / ARRANGE",
+      "role": "筆文字クリエイター",
       "avatar": null,
       "avatar_initial": "も",
       "avatar_hue": 340,
       "links": {
-        "twitter": null,
-        "youtube": null,
+        "twitter": "https://x.com/sayshow_nagon53",
+        "youtube": "https://x.com/sayshow_nagon53",
         "booth": null,
         "pixiv": null,
         "skeb": null
       },
       "works": [
         {
-          "title": "夏宵テーマBGMパック",
-          "type": "booth",
-          "type_label": "BOOTH出品",
-          "thumb": "assets/creators/work-02-01.jpg",
-          "thumb_emoji": "🎵",
-          "badge": "BOOTH",
-          "desc": "きみ夏宵あそびのために制作したオリジナルBGM集。ロビー・バトル・エンディングなど全5曲をセットで配布中。商用利用可。",
-          "cta": "BOOTHで入手",
+          "title": "おしゃれな筆文字欲しくない？",
+          "type": null,
+          "type_label": null,
+          "thumb": "assets/creators/work-02-02.jpg",
+          "thumb_emoji": "🎤",
+          "badge": null,
+          "desc": null,
+          "cta": "YouTubeで聴く",
           "url": null
         },
         {
-          "title": "イベント応援歌「夏の宵に」",
-          "type": "youtube",
-          "type_label": "YouTube",
-          "thumb": "assets/creators/work-02-02.jpg",
-          "thumb_emoji": "🎤",
-          "badge": "YouTube",
-          "desc": "本イベント参加者へ贈るオリジナル楽曲。夏祭りの賑やかさと宵の切なさをテーマに書き下ろしました。",
-          "cta": "YouTubeで聴く",
-          "url": null
+          "title": "書きおろしグッズはこちらから",
+          "type": "SUZURI",
+          "type_label": "SUZURI",
+          "thumb": "assets/creators/work-02-01.jpg",
+          "thumb_emoji": "🎵",
+          "badge": "SUZURI",
+          "desc": "斉唱なごんさま入魂の一筆がはいった数々のグッズはこちらからゲットできます♪",
+          "cta": "SUZURIで購入する",
+          "url": "https://suzuri.jp/sayshow_nagon53"
         }
       ]
     },
     {
       "id": "chii_chii_art",
-      "name": "ちぃーちぃー",
+      "name": "やなり",
       "handle": "@chii_chii_art",
       "role": "GOODS / FAN ART",
       "avatar": "assets/creators/creator-03.png",
       "avatar_initial": "ち",
       "avatar_hue": 180,
       "links": {
-        "twitter": null,
+        "twitter": "https://x.com/yanari_yokai",
         "youtube": null,
         "booth": null,
         "pixiv": null,
