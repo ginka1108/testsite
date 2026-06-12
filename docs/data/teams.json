@@ -4,49 +4,86 @@
       "id": "bakuretsu",
       "name": "爆裂夏花火",
       "color": "240, 80, 100",
-      "kv_image": "assets/kv-fireworks.png",
+      "kv_image": "assets/kv-bakuretsu.png",
       "leaders": [
         {
           "id": "nishinoururi",
           "name": "西乃うるり",
-          "avatar": null,
-          "avatar_initial": "西",
+          "avatar": "hanabi-ururi.png",
+          "avatar_initial": "う",
           "avatar_hue": 0,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": "https://www.youtube.com/channel/UCwjAwj3Nn4RfrfbRQr7B8YQ",
+            "twitter": "https://x.com/ururipanda"
+          }
         },
         {
           "id": "yuurakuten",
           "name": "遊楽天GOTH",
-          "avatar": null,
+          "avatar": "hanabi-goth.png",
           "avatar_initial": "遊",
           "avatar_hue": 340,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": "https://www.youtube.com/@YuRaKuTen_GOTH",
+            "twitter": "https://x.com/YuRaKuTen_GOTH"
+          }
         }
       ],
       "matsuri": [
         {
-          "id": "yureika",
-          "name": "ゆうれいいか",
-          "avatar": null,
-          "avatar_initial": "ゆ",
+          "id": "araniamu",
+          "name": "新弐あむ",
+          "avatar": "hanabi-arani.png",
+          "avatar_initial": "新",
           "avatar_hue": 200,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": "https://www.youtube.com/@Arani_Amu",
+            "twitter": "https://x.com/Arani_Amu"
+          }
         },
         {
-          "id": "manikyua",
-          "name": "まにきゅあ",
-          "avatar": null,
-          "avatar_initial": "ま",
+          "id": "akarun",
+          "name": "あかるん",
+          "avatar": "hanabi-akarun.png",
+          "avatar_initial": "あ",
           "avatar_hue": 340,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": "https://www.youtube.com/channel/UCKKhVjuj4tg6cP5vacfkDsQ",
+            "twitter": "https://x.com/akarun_melody"
+          }
         },
         {
-          "id": "himari",
-          "name": "胡桃坂ひまり",
-          "avatar": null,
-          "avatar_initial": "ひ",
+          "id": "nichinamui",
+          "name": "日菜むい",
+          "avatar": "hanabi-mui.png",
+          "avatar_initial": "む",
           "avatar_hue": 300,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": "https://www.youtube.com/@nichinamui",
+            "twitter": "https://x.com/nichinamui"
+          }
+        },
+        {
+          "id": "pepetaro",
+          "name": "ぺぺたろ",
+          "avatar": "hanabi-pepetaro.png",
+          "avatar_initial": "ぺ",
+          "avatar_hue": 320,
+          "links": {
+            "youtube": "https://www.youtube.com/@pepetarobiyori/",
+            "twitter": "https://x.com/pepetarobiyori"
+          }
+        },
+        {
+          "id": "salsnoah",
+          "name": "さるさのあ",
+          "avatar": "hanabi-salsnoah.png",
+          "avatar_initial": "S",
+          "avatar_hue": 270,
+          "links": {
+            "youtube": "https://www.youtube.com/@salsite",
+            "twitter": "https://x.com/Sals_mj"
+          }
         }
       ]
     },
@@ -62,7 +99,10 @@
           "avatar": null,
           "avatar_initial": "杵",
           "avatar_hue": 270,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "hoshikage",
@@ -70,7 +110,10 @@
           "avatar": null,
           "avatar_initial": "星",
           "avatar_hue": 220,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         }
       ],
       "matsuri": [
@@ -80,7 +123,10 @@
           "avatar": null,
           "avatar_initial": "G",
           "avatar_hue": 30,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "yunchuru",
@@ -88,7 +134,10 @@
           "avatar": null,
           "avatar_initial": "ゆ",
           "avatar_hue": 130,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "seiyanosetsu",
@@ -96,7 +145,10 @@
           "avatar": null,
           "avatar_initial": "聖",
           "avatar_hue": 190,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         }
       ]
     },
@@ -112,7 +164,10 @@
           "avatar": null,
           "avatar_initial": "か",
           "avatar_hue": 30,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "hosoya",
@@ -120,7 +175,10 @@
           "avatar": null,
           "avatar_initial": "細",
           "avatar_hue": 50,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         }
       ],
       "matsuri": [
@@ -130,7 +188,10 @@
           "avatar": null,
           "avatar_initial": "銀",
           "avatar_hue": 280,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "dorome",
@@ -138,7 +199,10 @@
           "avatar": null,
           "avatar_initial": "泥",
           "avatar_hue": 20,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "shinonome",
@@ -146,7 +210,10 @@
           "avatar": null,
           "avatar_initial": "東",
           "avatar_hue": 170,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         }
       ]
     },
@@ -162,7 +229,10 @@
           "avatar": null,
           "avatar_initial": "め",
           "avatar_hue": 270,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "natsuyagi",
@@ -170,7 +240,10 @@
           "avatar": null,
           "avatar_initial": "夏",
           "avatar_hue": 330,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         }
       ],
       "matsuri": [
@@ -180,7 +253,10 @@
           "avatar": null,
           "avatar_initial": "メ",
           "avatar_hue": 240,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "sedonarian",
@@ -188,7 +264,10 @@
           "avatar": null,
           "avatar_initial": "せ",
           "avatar_hue": 160,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         },
         {
           "id": "salsnoah",
@@ -196,7 +275,10 @@
           "avatar": null,
           "avatar_initial": "S",
           "avatar_hue": 210,
-          "links": { "youtube": "#", "twitter": "#" }
+          "links": {
+            "youtube": null,
+            "twitter": null
+          }
         }
       ]
     }
