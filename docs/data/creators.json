@@ -2,28 +2,30 @@
   "creators": [
     {
       "id": "shinkai_pudding",
-      "name": "深海ぷりん",
-      "handle": "@shinkai_pudding",
-      "role": "ILLUSTRATOR",
+      "name": "ながいキリン",
+      "handle": "@nagai_kirin",
+      "role": "配信演出クリエイター",
       "avatar": "assets/creators/creator-01.png",
-      "avatar_initial": "ぷ",
+      "avatar_initial": "キ",
       "avatar_hue": 260,
       "links": {
-        "twitter": "#",
-        "booth": "#",
-        "pixiv": "#"
+        "twitter": null,
+        "youtube": null,
+        "booth": null,
+        "pixiv": null,
+        "skeb": null
       },
       "works": [
         {
-          "title": "夏宵アクリルキーホルダー",
-          "type": "booth",
-          "type_label": "BOOTH出品",
+          "title": "オリジナルコメントCSS",
+          "type": "つなぐ",
+          "type_label": "つなぐ",
           "thumb": "assets/creators/work-01-01.jpg",
           "thumb_emoji": "🎐",
-          "badge": "BOOTH",
-          "desc": "きみ夏宵あそびのイメージイラストを使用したアクリルキーホルダーです。両面フルカラー印刷。限定50個。",
-          "cta": "BOOTHで見る",
-          "url": "#"
+          "badge": "つなぐ",
+          "desc": "きみ夏宵あそびのイメージのリアクションタンクやスパチャ演出を手掛けたながいキリンさま、現在もご依頼受付中！自分だけの配信画面を作りたいかたはぜひ！",
+          "cta": "つなぐで依頼する",
+          "url": null
         },
         {
           "title": "イベントメインビジュアルイラスト",
@@ -34,7 +36,7 @@
           "badge": "pixiv",
           "desc": "花火と浴衣をテーマに描き下ろしたメインビジュアル。夏の夜のひとときを切り取りました。",
           "cta": "pixivで見る",
-          "url": "#"
+          "url": null
         },
         {
           "title": "コミッション受付中",
@@ -45,7 +47,7 @@
           "badge": "SKEB",
           "desc": "キャラクターイラストの制作を承っています。背景付き・SDなどご相談ください。イベント期間中は優先対応します。",
           "cta": "Skebでリクエスト",
-          "url": "#"
+          "url": null
         }
       ]
     },
@@ -58,8 +60,11 @@
       "avatar_initial": "も",
       "avatar_hue": 340,
       "links": {
-        "twitter": "#",
-        "youtube": "#"
+        "twitter": null,
+        "youtube": null,
+        "booth": null,
+        "pixiv": null,
+        "skeb": null
       },
       "works": [
         {
@@ -71,7 +76,7 @@
           "badge": "BOOTH",
           "desc": "きみ夏宵あそびのために制作したオリジナルBGM集。ロビー・バトル・エンディングなど全5曲をセットで配布中。商用利用可。",
           "cta": "BOOTHで入手",
-          "url": "#"
+          "url": null
         },
         {
           "title": "イベント応援歌「夏の宵に」",
@@ -82,7 +87,7 @@
           "badge": "YouTube",
           "desc": "本イベント参加者へ贈るオリジナル楽曲。夏祭りの賑やかさと宵の切なさをテーマに書き下ろしました。",
           "cta": "YouTubeで聴く",
-          "url": "#"
+          "url": null
         }
       ]
     },
@@ -95,8 +100,11 @@
       "avatar_initial": "ち",
       "avatar_hue": 180,
       "links": {
-        "twitter": "#",
-        "booth": "#"
+        "twitter": null,
+        "youtube": null,
+        "booth": null,
+        "pixiv": null,
+        "skeb": null
       },
       "works": [
         {
@@ -105,11 +113,11 @@
           "type_label": "BOOTH出品",
           "thumb": "assets/creators/work-03-01.jpg",
           "thumb_emoji": "🌸",
-          "thumb_aspect": "21 / 9",
           "badge": "BOOTH",
           "desc": "各チームカラーをイメージした缶バッジ4点セット。蒼星月花・れいめあビアガーデン・縁日で射的！・爆裂夏花火の4チームそれぞれのデザイン。直径44mm缶バッジ。",
           "cta": "BOOTHで見る",
-          "url": "#"
+          "url": null,
+          "thumb_aspect": "21 / 9"
         }
       ]
     }
