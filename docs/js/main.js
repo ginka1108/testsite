@@ -7,37 +7,12 @@
   'use strict';
 
   // ──────────────────────────────────────────────
-  //  1. White-reveal: fade out the white overlay
-  //     Always runs so the page never flashes blank.
-  //     When coming from intro, overlay starts opaque (white).
-  //     When navigating directly, overlay fades away instantly.
+  //  1. Dive-reveal: オーバーレイの生成・沈降・フェードは
+  //     top.html の <head> インラインCSS + インラインJS が担当。
+  //     ここで #page-reveal に触らないこと(インライン側が
+  //     transitionend 後に要素を remove() するため)。
+  //     フェード開始時に 'dive-reveal:out' イベントが飛んでくる。
   // ──────────────────────────────────────────────
-  const revealEl = document.getElementById('page-reveal');
-  if (revealEl) {
-    const fromIntro = new URLSearchParams(window.location.search).get('from') === 'intro';
-
-    if (fromIntro) {
-      // Start opaque, then slowly dissolve (matches intro whiteout timing)
-      revealEl.style.opacity = '1';
-      // Small delay so the browser has painted the page beneath
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          revealEl.style.transition = 'opacity 1.4s cubic-bezier(0.4, 0, 0.2, 1)';
-          revealEl.style.opacity = '0';
-          revealEl.addEventListener('transitionend', () => {
-            revealEl.style.display = 'none';
-          }, { once: true });
-        });
-      });
-    } else {
-      // Direct navigation — dissolve quickly so page is visible
-      revealEl.style.transition = 'opacity 0.5s ease';
-      revealEl.style.opacity = '0';
-      revealEl.addEventListener('transitionend', () => {
-        revealEl.style.display = 'none';
-      }, { once: true });
-    }
-  }
 
   // ──────────────────────────────────────────────
   //  2. Register GSAP plugins
@@ -56,20 +31,40 @@
 
   // ──────────────────────────────────────────────
   //  4. Hero entrance animation (GSAP timeline)
-  //     Delayed slightly to let white-reveal fade first
+  //     intro経由: オーバーレイのフェード開始('dive-reveal:out')に
+  //               同期して再生 → 泡が消えながらロゴが浮かび上がる
+  //     直接アクセス: 従来どおり0.2秒後に再生
   // ──────────────────────────────────────────────
   const fromIntro = new URLSearchParams(window.location.search).get('from') === 'intro';
-  const heroDelay = fromIntro ? 0.6 : 0.2; // wait for white to lift
 
-  const heroTl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: heroDelay });
+  function playHeroEntrance(delay) {
+    gsap.timeline({ defaults: { ease: 'power3.out' }, delay })
+      .to('#hero-eyebrow',    { opacity: 1, y: 0, duration: 1.0 }, 0.0)
+      .to('#hero-logo-wrap',  { opacity: 1, y: 0, scale: 1, duration: 1.2 }, 0.2)
+      .to('#hero-date',       { opacity: 1, y: 0, duration: 0.9 }, 0.7)
+      .to('#hero-tagline',    { opacity: 1, y: 0, duration: 0.9 }, 1.0)
+      .to('#hero-ctas',       { opacity: 1, y: 0, duration: 0.8 }, 1.3)
+      .to('#scroll-indicator',{ opacity: 1, duration: 0.8 },        1.8);
+  }
 
-  heroTl
-    .to('#hero-eyebrow',    { opacity: 1, y: 0, duration: 1.0 }, 0.0)
-    .to('#hero-logo-wrap',  { opacity: 1, y: 0, scale: 1, duration: 1.2 }, 0.2)
-    .to('#hero-date',       { opacity: 1, y: 0, duration: 0.9 }, 0.7)
-    .to('#hero-tagline',    { opacity: 1, y: 0, duration: 0.9 }, 1.0)
-    .to('#hero-ctas',       { opacity: 1, y: 0, duration: 0.8 }, 1.3)
-    .to('#scroll-indicator',{ opacity: 1, duration: 0.8 },        1.8);
+  if (fromIntro && document.getElementById('page-reveal')) {
+    let heroStarted = false;
+    const startHero = () => {
+      if (heroStarted) return;
+      heroStarted = true;
+      playHeroEntrance(0.3);
+    };
+    if (window.__diveRevealOut) {
+      // イベント発火がmain.js読み込みより先だった場合のフォールバック
+      startHero();
+    } else {
+      window.addEventListener('dive-reveal:out', startHero, { once: true });
+    }
+    // フェイルセーフ: 万一イベントが来なくても必ず再生する
+    setTimeout(startHero, 11000);
+  } else {
+    playHeroEntrance(0.2);
+  }
 
   // ──────────────────────────────────────────────
   //  5. Scroll-triggered reveal for .reveal elements
