@@ -2,9 +2,16 @@
    index.css — Hero & Page-specific styles
 ============================================ */
 
-/* ── Dive-reveal overlay ──
-   #page-reveal のスタイルは top.html の <head> インラインCSSに移動。
-   ここに同セレクタの定義を復活させないこと(インライン側を上書きしてしまう) */
+/* ── White-reveal overlay (bridges from intro whiteout) ── */
+#page-reveal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: #ffffff;
+  opacity: 1;
+  pointer-events: none;
+  /* transition applied by JS after DOM ready */
+}
 
 /* ── Hero ── */
 #hero {

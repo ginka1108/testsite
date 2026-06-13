@@ -3,15 +3,7 @@
    Summer Night Festival Design System
 ============================================ */
 
-/* フォントの@importは削除した。
-   @importは「styles.css取得完了→@import発見→Google Fontsへ接続→フォントCSS取得」
-   という直列チェーンになり、描画ブロックを大幅に伸ばすため。
-   代わりに各ページの<head>へ以下の3行を追加すること:
-
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;500&family=Cinzel:wght@400;600&display=swap">
-*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;500&family=Cinzel:wght@400;600&display=swap');
 
 :root {
   /* Color Palette */
@@ -43,10 +35,7 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-  background: var(--c-night); /* ページ間遷移時の白フラッシュ防止 */
-}
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--c-night);
