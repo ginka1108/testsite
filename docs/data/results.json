@@ -1,24 +1,89 @@
 {
   "meta": {
-    "updated_at": "2025-08-11 21:12:33",
+    "updated_at": "Mon Aug 11 2025 21:12:33 GMT+0900 (日本標準時)",
     "updated_label": "迄に終了した対局まで"
   },
   "team_ranking": [
-    { "rank": 1, "name": "蒼星月花",          "points": 178290, "kansen_points": 8900 },
-    { "rank": 2, "name": "れいめあビアガーデン", "points": 152500, "kansen_points": 5000 },
-    { "rank": 3, "name": "縁日で射的！",        "points": 145200, "kansen_points": 6650 },
-    { "rank": 4, "name": "爆裂夏花火",          "points": 138850, "kansen_points": 4750 }
+    {
+      "rank": 1,
+      "name": "蒼星月花",
+      "points": 178290,
+      "kansen_points": 8900
+    },
+    {
+      "rank": 2,
+      "name": "れいめあビアガーデン",
+      "points": 152500,
+      "kansen_points": 5000
+    },
+    {
+      "rank": 3,
+      "name": "縁日で射的！",
+      "points": 145200,
+      "kansen_points": 6650
+    },
+    {
+      "rank": 4,
+      "name": "爆裂夏花火",
+      "points": 138850,
+      "kansen_points": 4750
+    }
   ],
   "personal_ranking": [
-    { "rank": 1, "name": "さめ",        "team": "れいめあビアガーデン", "points": 7640 },
-    { "rank": 2, "name": "東雲ハヤテ",  "team": "縁日で射的！",        "points": 7300 },
-    { "rank": 3, "name": "脳筋の伊豆",  "team": "蒼星月花",            "points": 7280 },
-    { "rank": 4, "name": "ヨッシー9zde","team": "爆裂夏花火",          "points": 7020 },
-    { "rank": 5, "name": "三國レオ",    "team": "爆裂夏花火",          "points": 6430 },
-    { "rank": 6, "name": "winsent",     "team": "爆裂夏花火",          "points": 6300 },
-    { "rank": 7, "name": "ハガT",       "team": "蒼星月花",            "points": 6220 },
-    { "rank": 8, "name": "えび",        "team": "爆裂夏花火",          "points": 6170 },
-    { "rank": 9, "name": "アイオらいと","team": "縁日で射的！",        "points": 5820 }
+    {
+      "rank": 1,
+      "name": "さめ",
+      "points": 7640,
+      "team": "れいめあビアガーデン"
+    },
+    {
+      "rank": 2,
+      "name": "東雲ハヤテ",
+      "points": 7300,
+      "team": "縁日で射的！"
+    },
+    {
+      "rank": 3,
+      "name": "脳筋の伊豆",
+      "points": 7280,
+      "team": "蒼星月花"
+    },
+    {
+      "rank": 4,
+      "name": "ヨッシー9zde",
+      "points": 7020,
+      "team": "爆裂夏花火"
+    },
+    {
+      "rank": 5,
+      "name": "三國レオ",
+      "points": 6430,
+      "team": "爆裂夏花火"
+    },
+    {
+      "rank": 6,
+      "name": "winsent",
+      "points": 6300,
+      "team": "爆裂夏花火"
+    },
+    {
+      "rank": 7,
+      "name": "ハガT",
+      "points": 6220,
+      "team": "蒼星月花"
+    },
+    {
+      "rank": 8,
+      "name": "えび",
+      "points": 6170,
+      "team": "爆裂夏花火"
+    },
+    {
+      "rank": 9,
+      "name": "アイオらいと",
+      "points": 5820,
+      "team": "縁日で射的！"
+    }
   ],
   "daily_ranking": [],
   "counts_ranking": []
