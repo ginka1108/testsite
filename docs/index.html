@@ -180,6 +180,10 @@
   // ── Ensure surface video plays ──
   vSurface.play().catch(() => {});
 
+  // ── Safari対策: rel=prefetch非対応環境向けにfetchでもキャッシュを温める ──
+  ['top.html', 'css/styles.css', 'css/top.css', 'js/main.js', 'js/data-loader.js']
+    .forEach(u => fetch(u).catch(() => {}));
+
   // ── Preload dive video silently ──
   vDive.load();
 

@@ -102,8 +102,32 @@
     }
   </style>
 
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/top.css">
+  <!-- ── Stylesheets ──
+       head内の同期<link rel="stylesheet">は、インラインCSSで描く
+       オーバーレイも含めてページ全体のfirst paintをブロックする。
+       intro経由(from=intro)ではオーバーレイが全画面を覆っている間に
+       裏でCSSを読み込めばよいので、media="print"トリックで非同期化し、
+       白いまま固まる時間を排除する。直アクセス時はFOUC防止のため同期。 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script>
+    (function () {
+      var asyncCss = /[?&]from=intro/.test(location.search);
+      var attr = asyncCss
+        ? ' media="print" onload="this.onload=null;this.media=\'all\'"'
+        : '';
+      document.write(
+        '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;500&family=Cinzel:wght@400;600&display=swap"' + attr + '>' +
+        '<link rel="stylesheet" href="css/styles.css"' + attr + '>' +
+        '<link rel="stylesheet" href="css/top.css"' + attr + '>'
+      );
+    })();
+  </script>
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Noto+Sans+JP:wght@300;400;500&family=Cinzel:wght@400;600&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/top.css">
+  </noscript>
 </head>
 <body>
 
@@ -119,24 +143,31 @@
 
   var reveal = document.getElementById('page-reveal');
 
-  // 泡を生成(サイズ・位置・揺れ・タイミングをランダム化)
-  var frag = document.createDocumentFragment();
-  for (var i = 0; i < 30; i++) {
-    var b = document.createElement('span');
-    b.className = 'rv-bubble';
-    var size = 6 + Math.random() * 36;
-    b.style.cssText =
-      'left:' + (Math.random() * 100).toFixed(1) + '%;' +
-      'width:' + size.toFixed(0) + 'px;height:' + size.toFixed(0) + 'px;' +
-      'animation-duration:' + (2.4 + Math.random() * 2.6).toFixed(2) + 's;' +
-      'animation-delay:' + (0.6 + Math.random() * 2.0).toFixed(2) + 's;' +
-      '--sway:' + (Math.random() * 70 - 35).toFixed(0) + 'px;';
-    frag.appendChild(b);
-  }
-  reveal.appendChild(frag);
+  // 泡の生成と沈降アニメーション開始は「最初に描画されるフレーム」に同期させる。
+  // パース時に開始するとCSSアニメーションの時計だけ先に進み、
+  // 描画が遅れた場合に沈降が途中から見えてしまうため。
+  requestAnimationFrame(function () {
+    requestAnimationFrame(function () {
+      // 泡を生成(サイズ・位置・揺れ・タイミングをランダム化)
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < 30; i++) {
+        var b = document.createElement('span');
+        b.className = 'rv-bubble';
+        var size = 6 + Math.random() * 36;
+        b.style.cssText =
+          'left:' + (Math.random() * 100).toFixed(1) + '%;' +
+          'width:' + size.toFixed(0) + 'px;height:' + size.toFixed(0) + 'px;' +
+          'animation-duration:' + (2.4 + Math.random() * 2.6).toFixed(2) + 's;' +
+          'animation-delay:' + (0.6 + Math.random() * 2.0).toFixed(2) + 's;' +
+          '--sway:' + (Math.random() * 70 - 35).toFixed(0) + 'px;';
+        frag.appendChild(b);
+      }
+      reveal.appendChild(frag);
 
-  // 沈むグラデーション開始
-  document.documentElement.classList.add('reveal-run');
+      // 沈むグラデーション開始
+      document.documentElement.classList.add('reveal-run');
+    });
+  });
 
   // 「最低演出時間」と「ページ読み込み完了」の両方が揃ったらフェードアウト
   var minTime = new Promise(function (r) { setTimeout(r, 3600); });
