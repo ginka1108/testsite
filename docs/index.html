@@ -6,14 +6,6 @@
   <title>きみ夏宵あそび</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
-
-  <!-- ── Prefetch top.html assets: 海面ループ中に先読みして遷移後のラグを短縮 ── -->
-  <link rel="prefetch" href="top.html">
-  <link rel="prefetch" href="css/styles.css">
-  <link rel="prefetch" href="css/top.css">
-  <link rel="prefetch" href="js/main.js">
-  <link rel="prefetch" href="js/data-loader.js">
-  <link rel="prefetch" href="assets/logo-dark.png">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -180,10 +172,6 @@
   // ── Ensure surface video plays ──
   vSurface.play().catch(() => {});
 
-  // ── Safari対策: rel=prefetch非対応環境向けにfetchでもキャッシュを温める ──
-  ['top.html', 'css/styles.css', 'css/top.css', 'js/main.js', 'js/data-loader.js']
-    .forEach(u => fetch(u).catch(() => {}));
-
   // ── Preload dive video silently ──
   vDive.load();
 
@@ -191,9 +179,6 @@
   function onTap(e) {
     if (dived) return;
     dived = true;
-
-    // ダイブ再生中(数秒)にトップページのヒーロー動画をキャッシュへ先読み
-    fetch('assets/videos/bg-lantern.mp4').catch(() => {});
 
     // Ripple effect at tap point
     const x = e.clientX ?? e.touches?.[0]?.clientX ?? window.innerWidth / 2;
