@@ -7,7 +7,10 @@
       "avatar_initial": "里",
       "avatar_hue": 60,
       "desc": "いつも週末の夜に雀魂の段位戦、友人戦の配信を行なっております！ぜひお気軽にお越しくださいませ～✨",
-      "links": { "youtube": "#", "twitter": "#" }
+      "links": {
+        "youtube": null,
+        "twitter": null
+      }
     },
     {
       "id": "zerosora",
@@ -16,7 +19,10 @@
       "avatar_initial": "零",
       "avatar_hue": 170,
       "desc": "おはこんにちは！零空です！普段はFPSや麻雀など色々配信しています！颯やかし担当で頑張ってますので、よろしくお願いいたします！",
-      "links": { "youtube": "#", "twitter": "#" }
+      "links": {
+        "youtube": null,
+        "twitter": null
+      }
     },
     {
       "id": "ohwarabe",
@@ -25,7 +31,10 @@
       "avatar_initial": "大",
       "avatar_hue": 350,
       "desc": "麻雀大好きVtuber一清楚なサキュバス大童レイナです💜段位戦を中心にゲームなど幅広く手を出しています✨",
-      "links": { "youtube": "#", "twitter": "#" }
+      "links": {
+        "youtube": null,
+        "twitter": null
+      }
     },
     {
       "id": "draneko",
@@ -34,7 +43,10 @@
       "avatar_initial": "ド",
       "avatar_hue": 40,
       "desc": "四姉妹をシングル子育て中　シンママVTuberドラネコですっ！育児の息抜きに夜更かし雀魂してます。",
-      "links": { "youtube": "#", "twitter": "#" }
+      "links": {
+        "youtube": null,
+        "twitter": null
+      }
     },
     {
       "id": "marochofu",
@@ -43,7 +55,10 @@
       "avatar_initial": "ま",
       "avatar_hue": 245,
       "desc": "日本プロ麻雀協会の雀聖雅人ことまろちょふのチャンネルです、雀魂を中心に配信しております！",
-      "links": { "youtube": "#", "twitter": "#" }
+      "links": {
+        "youtube": null,
+        "twitter": null
+      }
     },
     {
       "id": "higekujira",
@@ -52,7 +67,10 @@
       "avatar_initial": "ひ",
       "avatar_hue": 160,
       "desc": "龍が！　麻雀を打つ！　チャンネルだっ！",
-      "links": { "youtube": "#", "twitter": "#" }
+      "links": {
+        "youtube": null,
+        "twitter": null
+      }
     },
     {
       "id": "hinamui",
@@ -61,7 +79,10 @@
       "avatar_initial": "日",
       "avatar_hue": 310,
       "desc": "参加ゲスト。夏の宵を一緒に楽しもう！",
-      "links": { "youtube": "#", "twitter": "#" }
+      "links": {
+        "youtube": null,
+        "twitter": null
+      }
     }
   ]
 }
