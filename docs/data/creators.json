@@ -28,17 +28,6 @@
           "url": "https://tsunagu.cloud/products/93702"
         },
         {
-          "title": "HP",
-          "type": "HP",
-          "type_label": "HP",
-          "thumb": "assets/creators/work-01-02.jpg",
-          "thumb_emoji": "🎆",
-          "badge": "pixiv",
-          "desc": "花火と浴衣をテーマに描き下ろしたメインビジュアル。夏の夜のひとときを切り取りました。",
-          "cta": "pixivで見る",
-          "url": "https://piku.page/@nagai_kirin"
-        },
-        {
           "title": "自作配信ツール販売中！",
           "type": "BOOTH",
           "type_label": "SKEB",
@@ -48,6 +37,17 @@
           "desc": "キャラクターイラストの制作を承っています。背景付き・SDなどご相談ください。イベント期間中は優先対応します。",
           "cta": "Skebでリクエスト",
           "url": "https://nagai-kirin.booth.pm"
+        },
+        {
+          "title": "HP",
+          "type": "HP",
+          "type_label": "HP",
+          "thumb": "assets/creators/work-01-02.jpg",
+          "thumb_emoji": "🎆",
+          "badge": "pixiv",
+          "desc": "花火と浴衣をテーマに描き下ろしたメインビジュアル。夏の夜のひとときを切り取りました。",
+          "cta": "pixivで見る",
+          "url": "https://piku.page/@nagai_kirin"
         }
       ]
     },
@@ -57,7 +57,7 @@
       "handle": "@mormo_music",
       "role": "筆文字クリエイター",
       "avatar": null,
-      "avatar_initial": "も",
+      "avatar_initial": "斉",
       "avatar_hue": 340,
       "links": {
         "twitter": "https://x.com/sayshow_nagon53",
@@ -97,7 +97,7 @@
       "handle": "@chii_chii_art",
       "role": "GOODS / FAN ART",
       "avatar": "assets/creators/creator-03.png",
-      "avatar_initial": "ち",
+      "avatar_initial": "や",
       "avatar_hue": 180,
       "links": {
         "twitter": "https://x.com/yanari_yokai",
@@ -108,7 +108,7 @@
       },
       "works": [
         {
-          "title": "きみ夏宵あそび 公式缶バッジセット（4種）",
+          "title": "きみ夏宵あそびロゴ制作者やなりさんへの依頼はこちらから",
           "type": "booth",
           "type_label": "BOOTH出品",
           "thumb": "assets/creators/work-03-01.jpg",
