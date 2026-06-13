@@ -5,12 +5,12 @@
       "name": "めあともえ",
       "role": "本イベント主催",
       "desc": "夏の宵を一緒に遊ぼう。「きみ夏宵あそび」Night Fes を企画・主催。\n麻雀と縁日のエッセンスを融合させた、3日間の夏祭りイベントへようこそ。",
-      "avatar": "assets/mare.png",
+      "avatar": null,
       "avatar_initial": "め",
       "avatar_hue": 270,
       "links": {
-        "youtube": "#",
-        "twitter": "#"
+        "youtube": null,
+        "twitter": null
       }
     }
   ]
